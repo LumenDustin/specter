@@ -121,6 +121,50 @@ This document tracks all deployment steps, configurations, and changes made duri
 
 ---
 
+### Step 6: Add Evidence Images
+
+**Status:** COMPLETE
+
+**Actions:**
+- [x] Create DALL-E image generation script
+- [x] Generate 17 AI images for all evidence
+- [x] Update database with image URLs
+- [x] Deploy to Vercel
+
+**Images Generated:**
+- Hartwell (5): police report, property records, child drawing, thermal scan, missing poster
+- Blackwood (6): waveform, sanitarium photo, ID, coordinates map, CIA memo, hypnotherapy notes
+- Millbrook (6): timeline, newspaper, research notes, journal, case file, charter
+
+**Cost:** ~$0.68 (17 images × $0.04)
+
+**Scripts Added:**
+- `scripts/generate-evidence-images.py` - DALL-E image generation
+- `scripts/update-evidence-images.py` - Database URL updater
+- `docs/IMAGE_PROMPTS.md` - Prompt documentation
+
+---
+
+## Deployment URLs
+
+| Service | URL |
+|---------|-----|
+| Supabase | https://srcutthsyiipxihozqpx.supabase.co |
+| Vercel | https://specter-game.vercel.app |
+| GitHub | https://github.com/LumenDustin/specter |
+
+---
+
+## Roadmap
+
+See `docs/ROADMAP.md` for full product roadmap including:
+- Phase 2: Audio/Visual Enhancement (ElevenLabs, video content)
+- Phase 3: Mobile App Deployment (iOS, Android)
+- Phase 4: Content Expansion (new cases)
+- Phase 5: Growth & Monetization
+
+---
+
 ## Notes
 
 *This log will be updated after each deployment action.*
