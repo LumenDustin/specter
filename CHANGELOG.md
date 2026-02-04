@@ -123,25 +123,43 @@ This document tracks all deployment steps, configurations, and changes made duri
 
 ### Step 6: Add Evidence Images
 
-**Status:** COMPLETE
+**Status:** COMPLETE (v2 - HTML Templates)
 
-**Actions:**
+**Initial Approach (DALL-E):**
 - [x] Create DALL-E image generation script
-- [x] Generate 17 AI images for all evidence
-- [x] Update database with image URLs
-- [x] Deploy to Vercel
+- [x] Generate 17 AI images (~$0.68)
+- Issue: AI-generated text was illegible gibberish
 
-**Images Generated:**
-- Hartwell (5): police report, property records, child drawing, thermal scan, missing poster
-- Blackwood (6): waveform, sanitarium photo, ID, coordinates map, CIA memo, hypnotherapy notes
-- Millbrook (6): timeline, newspaper, research notes, journal, case file, charter
+**Final Approach (HTML Templates):**
+- [x] Created 17 HTML/CSS document templates with readable text
+- [x] Added Puppeteer render script
+- [x] Rendered all templates to PNG at 2x resolution
+- [x] Deployed to Vercel
 
-**Cost:** ~$0.68 (17 images × $0.04)
+**Templates Created:**
+| Case | Document | File |
+|------|----------|------|
+| Hartwell | Police Report | `police-report.html` |
+| Hartwell | Property Records | `property-records.html` |
+| Hartwell | Emma's Drawing | `emma-drawing.html` |
+| Hartwell | Thermal Imaging | `thermal-imaging.html` |
+| Hartwell | Missing Poster | `missing-person.html` |
+| Blackwood | Audio Waveform | `audio-waveform.html` |
+| Blackwood | Sanitarium Photo | `sanitarium.html` |
+| Blackwood | Chen ID/Clearance | `chen-id.html` |
+| Blackwood | Coordinates Map | `coordinates-map.html` |
+| Blackwood | CIA Memo | `cia-memo.html` |
+| Blackwood | Hypnotherapy Notes | `hypnotherapy-notes.html` |
+| Millbrook | Timeline Board | `timeline.html` |
+| Millbrook | 1923 Newspaper | `newspaper-1923.html` |
+| Millbrook | Carver's Notes | `carver-notes.html` |
+| Millbrook | Ward's Journal | `ward-journal.html` |
+| Millbrook | 1973 Case File | `case-file-1973.html` |
+| Millbrook | Threshold Charter | `threshold-charter.html` |
 
 **Scripts Added:**
-- `scripts/generate-evidence-images.py` - DALL-E image generation
-- `scripts/update-evidence-images.py` - Database URL updater
-- `docs/IMAGE_PROMPTS.md` - Prompt documentation
+- `scripts/render-templates.js` - Puppeteer PNG renderer
+- `scripts/templates/` - 17 HTML template files
 
 ---
 
