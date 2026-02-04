@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      width: 800px;
+      height: 800px;
+      background: #fafafa;
+      padding: 40px;
+      position: relative;
+    }
+
+    /* Paper texture */
+    body::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background:
+        linear-gradient(90deg, transparent 95%, rgba(200,200,200,0.3) 95%),
+        linear-gradient(transparent 95%, rgba(200,200,200,0.3) 95%);
+      background-size: 20px 20px;
+      pointer-events: none;
+    }
+
+    .paper {
+      background: white;
+      width: 100%;
+      height: 100%;
+      border: 1px solid #ddd;
+      box-shadow: 3px 3px 10px rgba(0,0,0,0.1);
+      padding: 30px;
+      position: relative;
+    }
+
+    /* Crayon-style lines */
+    .drawing-area {
+      width: 100%;
+      height: 450px;
+      position: relative;
+      margin-bottom: 20px;
+    }
+
+    /* House */
+    .house {
+      position: absolute;
+      bottom: 50px;
+      left: 100px;
+      width: 200px;
+      height: 150px;
+      background:
+        linear-gradient(135deg, #8B4513 0%, #8B4513 2%, transparent 2%),
+        linear-gradient(-135deg, #8B4513 0%, #8B4513 2%, transparent 2%),
+        #FFE4B5;
+      border: 4px solid #8B4513;
+      border-radius: 3px;
+    }
+
+    /* Roof */
+    .roof {
+      position: absolute;
+      bottom: 200px;
+      left: 75px;
+      width: 0;
+      height: 0;
+      border-left: 125px solid transparent;
+      border-right: 125px solid transparent;
+      border-bottom: 80px solid #8B0000;
+    }
+
+    /* Door */
+    .door {
+      position: absolute;
+      bottom: 50px;
+      left: 180px;
+      width: 35px;
+      height: 60px;
+      background: #4a3000;
+      border: 3px solid #2a1a00;
+      border-radius: 2px;
+    }
+
+    /* Windows */
+    .window {
+      position: absolute;
+      width: 40px;
+      height: 40px;
+      background: #87CEEB;
+      border: 3px solid #4a3000;
+    }
+
+    .window1 { bottom: 130px; left: 120px; }
+    .window2 { bottom: 130px; left: 240px; }
+
+    /* Dark figure */
+    .figure {
+      position: absolute;
+      bottom: 60px;
+      right: 150px;
+      width: 60px;
+      height: 120px;
+      background: #1a1a1a;
+      border-radius: 30px 30px 10px 10px;
+    }
+
+    .figure-head {
+      position: absolute;
+      bottom: 180px;
+      right: 155px;
+      width: 50px;
+      height: 50px;
+      background: #1a1a1a;
+      border-radius: 50%;
+    }
+
+    /* Red eyes */
+    .eye {
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      background: #ff0000;
+      border-radius: 50%;
+      box-shadow: 0 0 10px #ff0000, 0 0 20px #ff0000;
+    }
+
+    .eye1 { bottom: 200px; right: 185px; }
+    .eye2 { bottom: 200px; right: 165px; }
+
+    /* Family stick figures */
+    .stick-figure {
+      position: absolute;
+      width: 30px;
+      text-align: center;
+    }
+
+    .stick-head {
+      width: 20px;
+      height: 20px;
+      background: #FFE4C4;
+      border: 2px solid #000;
+      border-radius: 50%;
+      margin: 0 auto;
+    }
+
+    .stick-body {
+      width: 3px;
+      height: 30px;
+      background: #000;
+      margin: 0 auto;
+    }
+
+    .stick-arms {
+      width: 30px;
+      height: 3px;
+      background: #000;
+      position: relative;
+      top: -20px;
+    }
+
+    .stick-legs {
+      width: 20px;
+      height: 3px;
+      background: #000;
+      margin: 0 auto;
+      position: relative;
+    }
+
+    .stick-legs::before, .stick-legs::after {
+      content: '';
+      position: absolute;
+      width: 3px;
+      height: 25px;
+      background: #000;
+    }
+
+    .stick-legs::before { left: 0; transform: rotate(-15deg); }
+    .stick-legs::after { right: 0; transform: rotate(15deg); }
+
+    .family1 { bottom: 60px; left: 400px; }
+    .family2 { bottom: 60px; left: 450px; }
+    .family3 { bottom: 60px; left: 500px; }
+
+    /* Grass */
+    .grass {
+      position: absolute;
+      bottom: 20px;
+      left: 0;
+      right: 0;
+      height: 40px;
+      background: #228B22;
+      border-radius: 0;
+    }
+
+    /* Sun */
+    .sun {
+      position: absolute;
+      top: 30px;
+      right: 80px;
+      width: 60px;
+      height: 60px;
+      background: #FFD700;
+      border-radius: 50%;
+      box-shadow: 0 0 30px #FFD700;
+    }
+
+    /* Child's writing */
+    .child-text {
+      font-family: 'Comic Sans MS', cursive;
+      font-size: 28px;
+      color: #000;
+      position: absolute;
+    }
+
+    .title-text {
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      color: #FF1493;
+    }
+
+    .my-house { bottom: 280px; left: 130px; font-size: 18px; }
+    .shadow-man { bottom: 240px; right: 100px; font-size: 16px; color: #333; }
+    .my-friend { bottom: 10px; right: 100px; font-size: 14px; color: #8B0000; }
+
+    /* Evidence label */
+    .evidence-label {
+      position: absolute;
+      bottom: -60px;
+      left: 0;
+      right: 0;
+      background: #f5f5f5;
+      border: 1px solid #ccc;
+      padding: 10px 15px;
+      font-family: 'Courier New', monospace;
+      font-size: 11px;
+      color: #333;
+    }
+
+    .evidence-label strong {
+      color: #c41e3a;
+    }
+  </style>
+</head>
+<body>
+  <div class="paper">
+    <div class="drawing-area">
+      <div class="sun"></div>
+      <div class="grass"></div>
+
+      <!-- House -->
+      <div class="roof"></div>
+      <div class="house"></div>
+      <div class="door"></div>
+      <div class="window window1"></div>
+      <div class="window window2"></div>
+
+      <!-- Dark figure with red eyes -->
+      <div class="figure"></div>
+      <div class="figure-head"></div>
+      <div class="eye eye1"></div>
+      <div class="eye eye2"></div>
+
+      <!-- Family -->
+      <div class="stick-figure family1">
+        <div class="stick-head"></div>
+        <div class="stick-body"></div>
+        <div class="stick-arms"></div>
+        <div class="stick-legs"></div>
+      </div>
+      <div class="stick-figure family2">
+        <div class="stick-head"></div>
+        <div class="stick-body"></div>
+        <div class="stick-arms"></div>
+        <div class="stick-legs"></div>
+      </div>
+      <div class="stick-figure family3">
+        <div class="stick-head" style="width:15px;height:15px;"></div>
+        <div class="stick-body" style="height:20px;"></div>
+        <div class="stick-arms" style="width:20px;top:-15px;"></div>
+        <div class="stick-legs"></div>
+      </div>
+
+      <!-- Child's labels -->
+      <div class="child-text title-text">My FaMiLy</div>
+      <div class="child-text my-house">our house</div>
+      <div class="child-text shadow-man">the shadow man</div>
+      <div class="child-text my-friend">my frend</div>
+    </div>
+
+    <div class="evidence-label">
+      <strong>EVIDENCE ITEM #03</strong> | Interview Exhibit A | Drawing by Emma Hartwell, Age 7<br>
+      Collected: October 16, 2024 | Case #MPD-2024-0847 | Det. S. Chen
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&display=swap');
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      width: 700px;
+      height: 900px;
+      background: #1a1a1a;
+      padding: 20px;
+    }
+
+    .notepad {
+      background: #fff9c4;
+      width: 100%;
+      height: 100%;
+      position: relative;
+      box-shadow: 3px 3px 10px rgba(0,0,0,0.3);
+    }
+
+    /* Yellow legal pad lines */
+    .notepad::before {
+      content: '';
+      position: absolute;
+      top: 80px;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: repeating-linear-gradient(
+        transparent,
+        transparent 27px,
+        #91d1ff 27px,
+        #91d1ff 28px
+      );
+    }
+
+    /* Red margin line */
+    .notepad::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 70px;
+      width: 2px;
+      background: #ffaaaa;
+    }
+
+    .header {
+      padding: 15px 20px;
+      border-bottom: 2px solid #999;
+      font-family: Arial, sans-serif;
+      font-size: 12px;
+      color: #333;
+    }
+
+    .header-row {
+      display: flex;
+      gap: 30px;
+      margin-bottom: 5px;
+    }
+
+    .header-label {
+      font-weight: bold;
+    }
+
+    .content {
+      padding: 20px 20px 20px 85px;
+      font-family: 'Caveat', cursive;
+      font-size: 22px;
+      line-height: 28px;
+      color: #000080;
+    }
+
+    .entry {
+      margin-bottom: 25px;
+    }
+
+    .time {
+      font-weight: bold;
+      color: #333;
+      font-size: 18px;
+    }
+
+    .underline {
+      text-decoration: underline;
+    }
+
+    .circled {
+      display: inline-block;
+      border: 2px solid #cc0000;
+      border-radius: 50%;
+      padding: 2px 8px;
+      color: #cc0000;
+    }
+
+    .highlight {
+      background: rgba(255, 255, 0, 0.5);
+      padding: 0 3px;
+    }
+
+    .arrow {
+      color: #cc0000;
+      font-weight: bold;
+    }
+
+    .drawing {
+      margin: 20px 0;
+      padding: 15px;
+      border: 1px dashed #666;
+      background: rgba(255, 255, 255, 0.5);
+    }
+
+    .brain-wave {
+      font-size: 14px;
+      font-family: monospace;
+      color: #333;
+      letter-spacing: 2px;
+    }
+
+    .margin-note {
+      position: absolute;
+      left: 10px;
+      font-size: 14px;
+      color: #cc0000;
+      writing-mode: vertical-lr;
+      transform: rotate(180deg);
+    }
+
+    .mn1 { top: 200px; }
+    .mn2 { top: 400px; }
+    .mn3 { top: 600px; }
+
+    .stamp {
+      position: absolute;
+      bottom: 30px;
+      right: 30px;
+      border: 2px solid rgba(200, 0, 0, 0.4);
+      padding: 8px 15px;
+      color: rgba(200, 0, 0, 0.5);
+      font-family: Arial, sans-serif;
+      font-size: 11px;
+      font-weight: bold;
+      transform: rotate(-5deg);
+    }
+  </style>
+</head>
+<body>
+  <div class="notepad">
+    <div class="header">
+      <div class="header-row">
+        <span><span class="header-label">PATIENT:</span> Chen, Marcus J.</span>
+        <span><span class="header-label">SESSION:</span> #4</span>
+        <span><span class="header-label">DATE:</span> October 28, 2024</span>
+      </div>
+      <div class="header-row">
+        <span><span class="header-label">THERAPIST:</span> Dr. Eleanor Vance, PhD</span>
+        <span><span class="header-label">DURATION:</span> 90 min</span>
+      </div>
+    </div>
+
+    <div class="margin-note mn1">REVIEW</div>
+    <div class="margin-note mn2">!!</div>
+    <div class="margin-note mn3">???</div>
+
+    <div class="content">
+      <div class="entry">
+        <span class="time">14:30 -</span> Patient placed under. Standard induction. Responsive.<br>
+        Asked to recall events of Oct 15 at Blackwood site.
+      </div>
+
+      <div class="entry">
+        <span class="time">14:45 -</span> Subject describes <span class="underline">bright light</span> emanating from ruins.<br>
+        "It wasn't like a flashlight... it came from <span class="highlight">everywhere and nowhere</span>"
+      </div>
+
+      <div class="entry">
+        <span class="time">14:52 -</span> Patient becomes agitated. Reports hearing voices.<br>
+        <span class="arrow">→</span> Voice described as "<span class="circled">not human</span>" - multiple tones speaking simultaneously
+      </div>
+
+      <div class="entry">
+        <span class="time">15:01 -</span> <span class="underline">MISSING TIME</span> - Subject cannot account for approx 3 hours<br>
+        Last memory: entering structure. Next memory: waking in car.<br>
+        <span class="arrow">→</span> Classic abduction pattern??
+      </div>
+
+      <div class="drawing">
+        <div class="brain-wave">
+          THETA WAVE PATTERN (unexpected):<br>
+          ∿∿∿∿∿╱╲╱╲╱╲∿∿∿∿∿∿∿╱╲╱╲╱╲∿∿∿∿<br>
+          ↑ anomalous spike during recall
+        </div>
+      </div>
+
+      <div class="entry">
+        <span class="time">15:20 -</span> Subject repeats phrase in unknown language.<br>
+        Phonetic transcription: "<span class="highlight">Keth-ra vol nemneth</span>"<br>
+        <span class="arrow">→</span> Patient has NO recollection of saying this when awakened
+      </div>
+
+      <div class="entry">
+        <span class="time">15:35 -</span> Session terminated. Patient distressed.<br>
+        <span class="underline">ASSESSMENT:</span> Genuine trauma. Not fabricated.<br>
+        <span class="circled">Something happened at that site.</span>
+      </div>
+
+      <div class="entry">
+        <span class="arrow">→→→</span> Recommend: NO further hypnotherapy until psych eval<br>
+        <span class="arrow">→→→</span> Refer to Dr. Morrison re: dissociative symptoms
+      </div>
+    </div>
+
+    <div class="stamp">CONFIDENTIAL<br>PATIENT FILE</div>
+  </div>
+</body>
+</html>

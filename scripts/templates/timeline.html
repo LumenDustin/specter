@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Special+Elite&family=Courier+Prime&display=swap');
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      width: 900px;
+      height: 700px;
+      background: #2a2520;
+      padding: 20px;
+      position: relative;
+    }
+
+    .board {
+      background: #8b6914;
+      width: 100%;
+      height: 100%;
+      border: 15px solid #5c4a1f;
+      position: relative;
+      box-shadow: inset 0 0 50px rgba(0,0,0,0.3);
+    }
+
+    /* Cork texture simulation */
+    .board::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background:
+        radial-gradient(circle at 20% 30%, rgba(139, 90, 43, 0.3) 0%, transparent 3%),
+        radial-gradient(circle at 60% 70%, rgba(139, 90, 43, 0.3) 0%, transparent 2%),
+        radial-gradient(circle at 80% 20%, rgba(139, 90, 43, 0.3) 0%, transparent 4%),
+        radial-gradient(circle at 40% 80%, rgba(139, 90, 43, 0.3) 0%, transparent 3%);
+    }
+
+    /* Title card */
+    .title-card {
+      position: absolute;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: white;
+      padding: 10px 25px;
+      font-family: 'Courier Prime', monospace;
+      font-weight: bold;
+      font-size: 16px;
+      border: 1px solid #333;
+      box-shadow: 2px 2px 5px rgba(0,0,0,0.3);
+    }
+
+    .pin {
+      position: absolute;
+      width: 15px;
+      height: 15px;
+      border-radius: 50%;
+      box-shadow: 1px 1px 3px rgba(0,0,0,0.5);
+    }
+
+    .pin.red { background: radial-gradient(circle at 30% 30%, #ff6666, #cc0000); }
+    .pin.yellow { background: radial-gradient(circle at 30% 30%, #ffff66, #cccc00); }
+    .pin.blue { background: radial-gradient(circle at 30% 30%, #6666ff, #0000cc); }
+    .pin.green { background: radial-gradient(circle at 30% 30%, #66ff66, #00cc00); }
+
+    /* Photo cards */
+    .photo-card {
+      position: absolute;
+      width: 80px;
+      height: 100px;
+      background: white;
+      padding: 5px;
+      box-shadow: 2px 2px 8px rgba(0,0,0,0.4);
+    }
+
+    .photo-card .photo {
+      width: 100%;
+      height: 70px;
+      background: #444;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 30px;
+      color: #666;
+    }
+
+    .photo-card .name {
+      font-size: 8px;
+      text-align: center;
+      margin-top: 3px;
+      font-family: 'Special Elite', monospace;
+    }
+
+    .pc1 { top: 80px; left: 80px; transform: rotate(-5deg); }
+    .pc2 { top: 85px; left: 200px; transform: rotate(3deg); }
+    .pc3 { top: 75px; left: 320px; transform: rotate(-2deg); }
+    .pc4 { top: 250px; left: 100px; transform: rotate(4deg); }
+    .pc5 { top: 255px; left: 220px; transform: rotate(-3deg); }
+    .pc6 { top: 245px; left: 340px; transform: rotate(2deg); }
+    .pc7 { top: 420px; left: 120px; transform: rotate(-4deg); }
+    .pc8 { top: 415px; left: 240px; transform: rotate(3deg); }
+    .pc9 { top: 425px; left: 360px; transform: rotate(-2deg); }
+
+    /* Red string connections */
+    .string {
+      position: absolute;
+      height: 2px;
+      background: #cc0000;
+      transform-origin: left center;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.3);
+    }
+
+    .s1 { top: 130px; left: 160px; width: 50px; transform: rotate(5deg); }
+    .s2 { top: 135px; left: 280px; width: 50px; transform: rotate(-5deg); }
+    .s3 { top: 180px; left: 120px; width: 80px; transform: rotate(60deg); }
+    .s4 { top: 185px; left: 250px; width: 80px; transform: rotate(55deg); }
+    .s5 { top: 180px; left: 360px; width: 80px; transform: rotate(65deg); }
+    .s6 { top: 350px; left: 140px; width: 80px; transform: rotate(60deg); }
+    .s7 { top: 355px; left: 270px; width: 80px; transform: rotate(55deg); }
+    .s8 { top: 350px; left: 390px; width: 80px; transform: rotate(65deg); }
+
+    /* Year labels */
+    .year-label {
+      position: absolute;
+      background: #ffff99;
+      padding: 5px 15px;
+      font-family: 'Courier Prime', monospace;
+      font-weight: bold;
+      font-size: 20px;
+      box-shadow: 2px 2px 5px rgba(0,0,0,0.3);
+      transform: rotate(-2deg);
+    }
+
+    .y1923 { top: 70px; right: 100px; }
+    .y1973 { top: 240px; right: 100px; }
+    .y2023 { top: 410px; right: 100px; }
+
+    /* Note cards */
+    .note-card {
+      position: absolute;
+      background: white;
+      padding: 10px;
+      font-family: 'Special Elite', monospace;
+      font-size: 11px;
+      max-width: 150px;
+      box-shadow: 2px 2px 5px rgba(0,0,0,0.3);
+      line-height: 1.4;
+    }
+
+    .nc1 { top: 140px; right: 50px; transform: rotate(3deg); }
+    .nc2 { top: 310px; right: 40px; transform: rotate(-2deg); }
+    .nc3 { top: 480px; right: 60px; transform: rotate(2deg); }
+    .nc4 { bottom: 30px; left: 30px; transform: rotate(-3deg); background: #ffcccc; border: 2px solid #cc0000; font-size: 13px; font-weight: bold; }
+
+    /* Pattern indicator */
+    .pattern-arrow {
+      position: absolute;
+      right: 200px;
+      top: 180px;
+      height: 300px;
+      width: 50px;
+      border-right: 3px solid #cc0000;
+      border-top: 3px solid #cc0000;
+      border-bottom: 3px solid #cc0000;
+    }
+
+    .pattern-label {
+      position: absolute;
+      right: 260px;
+      top: 300px;
+      font-family: 'Special Elite', monospace;
+      color: #cc0000;
+      font-size: 14px;
+      transform: rotate(-90deg);
+      white-space: nowrap;
+    }
+  </style>
+</head>
+<body>
+  <div class="board">
+    <div class="title-card">MILLBROOK DISAPPEARANCES — TIMELINE ANALYSIS</div>
+
+    <!-- 1923 Row -->
+    <div class="year-label y1923">1923</div>
+    <div class="photo-card pc1">
+      <div class="photo">👤</div>
+      <div class="name">H. FINCH<br>Age 34</div>
+    </div>
+    <div class="pin red" style="top: 75px; left: 115px;"></div>
+
+    <div class="photo-card pc2">
+      <div class="photo">👤</div>
+      <div class="name">M. OWENS<br>Age 28</div>
+    </div>
+    <div class="pin red" style="top: 80px; left: 235px;"></div>
+
+    <div class="photo-card pc3">
+      <div class="photo">👤</div>
+      <div class="name">P. ASHWORTH<br>Age 19</div>
+    </div>
+    <div class="pin red" style="top: 70px; left: 355px;"></div>
+
+    <div class="note-card nc1">Oct 27, 1923<br>All three vanished same night. No bodies found.</div>
+    <div class="pin yellow" style="top: 135px; right: 45px;"></div>
+
+    <!-- 1973 Row -->
+    <div class="year-label y1973">1973</div>
+    <div class="photo-card pc4">
+      <div class="photo">👤</div>
+      <div class="name">R. DAVIES<br>Age 42</div>
+    </div>
+    <div class="pin red" style="top: 245px; left: 135px;"></div>
+
+    <div class="photo-card pc5">
+      <div class="photo">👤</div>
+      <div class="name">L. MARSH<br>Age 31</div>
+    </div>
+    <div class="pin red" style="top: 250px; left: 255px;"></div>
+
+    <div class="photo-card pc6">
+      <div class="photo">👤</div>
+      <div class="name">S. CRANE<br>Age 25</div>
+    </div>
+    <div class="pin red" style="top: 240px; left: 375px;"></div>
+
+    <div class="note-card nc2">Oct 31, 1973<br>Same location. Same circumstances. 50 years later.</div>
+    <div class="pin yellow" style="top: 305px; right: 35px;"></div>
+
+    <!-- 2023 Row -->
+    <div class="year-label y2023">2023</div>
+    <div class="photo-card pc7">
+      <div class="photo">👤</div>
+      <div class="name">J. WEBB<br>Age 38</div>
+    </div>
+    <div class="pin red" style="top: 415px; left: 155px;"></div>
+
+    <div class="photo-card pc8">
+      <div class="photo">👤</div>
+      <div class="name">A. PRICE<br>Age 29</div>
+    </div>
+    <div class="pin red" style="top: 410px; left: 275px;"></div>
+
+    <div class="photo-card pc9">
+      <div class="photo">👤</div>
+      <div class="name">K. THORN<br>Age 22</div>
+    </div>
+    <div class="pin red" style="top: 420px; left: 395px;"></div>
+
+    <div class="note-card nc3">Oct 29, 2023<br>Pattern continues. Three victims. No trace.</div>
+    <div class="pin yellow" style="top: 475px; right: 55px;"></div>
+
+    <!-- Strings -->
+    <div class="string s1"></div>
+    <div class="string s2"></div>
+    <div class="string s3"></div>
+    <div class="string s4"></div>
+    <div class="string s5"></div>
+    <div class="string s6"></div>
+    <div class="string s7"></div>
+    <div class="string s8"></div>
+
+    <!-- Pattern indicator -->
+    <div class="pattern-arrow"></div>
+    <div class="pattern-label">50 YEAR CYCLE</div>
+
+    <!-- Key finding -->
+    <div class="note-card nc4">9 VICTIMS<br>3 EVENTS<br>50 YEARS APART<br>WHAT HAPPENS IN 2073?</div>
+    <div class="pin blue" style="bottom: 25px; left: 25px;"></div>
+  </div>
+</body>
+</html>

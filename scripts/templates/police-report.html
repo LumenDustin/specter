@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Special+Elite&family=Courier+Prime&display=swap');
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      width: 800px;
+      height: 1000px;
+      background: #d4c5a9;
+      font-family: 'Courier Prime', 'Courier New', monospace;
+      padding: 40px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Aged paper texture */
+    body::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background:
+        radial-gradient(ellipse at 20% 80%, rgba(139, 90, 43, 0.15) 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 20%, rgba(139, 90, 43, 0.1) 0%, transparent 40%),
+        radial-gradient(ellipse at 40% 40%, rgba(0, 0, 0, 0.05) 0%, transparent 30%);
+      pointer-events: none;
+    }
+
+    /* Coffee stain */
+    .coffee-stain {
+      position: absolute;
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      background: radial-gradient(ellipse, transparent 40%, rgba(101, 67, 33, 0.15) 50%, rgba(101, 67, 33, 0.25) 60%, transparent 70%);
+      top: 600px;
+      right: 80px;
+    }
+
+    .header {
+      display: flex;
+      align-items: flex-start;
+      gap: 20px;
+      margin-bottom: 30px;
+      border-bottom: 2px solid #333;
+      padding-bottom: 20px;
+    }
+
+    .badge {
+      width: 80px;
+      height: 90px;
+      background: linear-gradient(135deg, #c9a227 0%, #8b7355 50%, #c9a227 100%);
+      border-radius: 0 0 40px 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      border: 3px solid #5c4a1f;
+      box-shadow: 2px 2px 8px rgba(0,0,0,0.3);
+    }
+
+    .badge-text {
+      font-size: 8px;
+      font-weight: bold;
+      color: #1a1a1a;
+      text-align: center;
+    }
+
+    .badge-star {
+      font-size: 24px;
+      color: #1a1a1a;
+    }
+
+    .title-section {
+      flex: 1;
+    }
+
+    .department {
+      font-size: 12px;
+      letter-spacing: 2px;
+      color: #444;
+      margin-bottom: 5px;
+    }
+
+    .title {
+      font-size: 28px;
+      font-weight: bold;
+      color: #1a1a1a;
+      letter-spacing: 1px;
+    }
+
+    .case-info {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-top: 15px;
+      font-size: 11px;
+    }
+
+    .case-info div {
+      display: flex;
+      gap: 5px;
+    }
+
+    .label {
+      font-weight: bold;
+      color: #333;
+    }
+
+    .value {
+      color: #1a1a1a;
+      border-bottom: 1px solid #666;
+      flex: 1;
+      padding-left: 5px;
+    }
+
+    .section {
+      margin: 25px 0;
+    }
+
+    .section-title {
+      font-size: 12px;
+      font-weight: bold;
+      letter-spacing: 1px;
+      border-bottom: 1px solid #333;
+      padding-bottom: 5px;
+      margin-bottom: 15px;
+      color: #222;
+    }
+
+    .content {
+      font-size: 13px;
+      line-height: 1.8;
+      color: #1a1a1a;
+      text-align: justify;
+    }
+
+    .highlight {
+      background: rgba(255, 255, 0, 0.3);
+      padding: 0 3px;
+    }
+
+    .redacted {
+      background: #1a1a1a;
+      color: #1a1a1a;
+      padding: 0 20px;
+    }
+
+    .stamp {
+      position: absolute;
+      bottom: 100px;
+      right: 60px;
+      width: 150px;
+      height: 150px;
+      border: 4px solid rgba(180, 30, 30, 0.6);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transform: rotate(-15deg);
+      color: rgba(180, 30, 30, 0.6);
+      font-weight: bold;
+      font-size: 16px;
+      text-align: center;
+      line-height: 1.2;
+    }
+
+    .signature-line {
+      margin-top: 40px;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .sig-block {
+      width: 200px;
+    }
+
+    .sig-line {
+      border-bottom: 1px solid #333;
+      height: 30px;
+      margin-bottom: 5px;
+    }
+
+    .sig-label {
+      font-size: 10px;
+      color: #444;
+    }
+
+    .handwritten {
+      font-family: 'Special Elite', cursive;
+      color: #000080;
+    }
+
+    .page-number {
+      position: absolute;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 10px;
+      color: #666;
+    }
+  </style>
+</head>
+<body>
+  <div class="coffee-stain"></div>
+
+  <div class="header">
+    <div class="badge">
+      <div class="badge-star">★</div>
+      <div class="badge-text">MILLBROOK<br>POLICE<br>DEPT</div>
+    </div>
+    <div class="title-section">
+      <div class="department">MILLBROOK POLICE DEPARTMENT</div>
+      <div class="title">INCIDENT REPORT</div>
+      <div class="case-info">
+        <div><span class="label">CASE #:</span><span class="value">MPD-2024-0847</span></div>
+        <div><span class="label">DATE:</span><span class="value">October 15, 2024</span></div>
+        <div><span class="label">CLASSIFICATION:</span><span class="value highlight">UNEXPLAINED DISTURBANCE</span></div>
+        <div><span class="label">OFFICER:</span><span class="value">Det. Sarah Chen, Badge #2847</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">LOCATION OF INCIDENT</div>
+    <div class="content">
+      1847 Hartwell Drive, Millbrook, PA 15001<br>
+      Single-family residence, built 1943. Property records indicate continuous occupancy since original construction.
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">COMPLAINANT</div>
+    <div class="content">
+      HARTWELL, Michael J. (DOB: <span class="redacted">REDACTED</span>)<br>
+      HARTWELL, Jennifer L. (DOB: <span class="redacted">REDACTED</span>)<br>
+      Residents report living at address for approximately 8 months.
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">NATURE OF COMPLAINT</div>
+    <div class="content">
+      Complainants report ongoing <span class="highlight">unexplained disturbances</span> within the residence over the past 6 weeks. Incidents include:
+      <br><br>
+      • Auditory phenomena: knocking sounds from within walls, particularly between 2:00-4:00 AM<br>
+      • Temperature anomalies: sudden cold spots in specific areas of the home<br>
+      • Objects displaced from original positions without explanation<br>
+      • Daughter (age 7) reports seeing an unidentified figure in her bedroom<br>
+      <br>
+      No evidence of forced entry or criminal activity observed. Residence inspected for structural/HVAC issues - none found.
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">OFFICER NOTES</div>
+    <div class="content handwritten">
+      Third call to this address in two weeks. Family appears genuinely distressed. Recommend follow-up with specialized investigative unit. See attached thermal imaging analysis.
+    </div>
+  </div>
+
+  <div class="stamp">CASE<br>OPEN</div>
+
+  <div class="signature-line">
+    <div class="sig-block">
+      <div class="sig-line"></div>
+      <div class="sig-label">REPORTING OFFICER SIGNATURE</div>
+    </div>
+    <div class="sig-block">
+      <div class="sig-line"></div>
+      <div class="sig-label">SUPERVISOR APPROVAL</div>
+    </div>
+  </div>
+
+  <div class="page-number">Page 1 of 3 | CONFIDENTIAL</div>
+</body>
+</html>

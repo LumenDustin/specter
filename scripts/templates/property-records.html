@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=IM+Fell+English&family=Courier+Prime&display=swap');
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      width: 800px;
+      height: 1000px;
+      background: #d9c9a3;
+      font-family: 'Courier Prime', monospace;
+      padding: 50px;
+      position: relative;
+    }
+
+    body::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background:
+        radial-gradient(ellipse at 30% 70%, rgba(101, 67, 33, 0.2) 0%, transparent 50%),
+        radial-gradient(ellipse at 70% 30%, rgba(101, 67, 33, 0.15) 0%, transparent 40%),
+        url("data:image/svg+xml,%3Csvg viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.08'/%3E%3C/svg%3E");
+      pointer-events: none;
+    }
+
+    .water-damage {
+      position: absolute;
+      top: 50px;
+      right: 30px;
+      width: 200px;
+      height: 300px;
+      background: radial-gradient(ellipse, rgba(139, 119, 80, 0.3) 0%, transparent 70%);
+      border-radius: 50%;
+      transform: rotate(20deg);
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 30px;
+      border-bottom: 3px double #333;
+      padding-bottom: 20px;
+    }
+
+    .county {
+      font-family: 'IM Fell English', serif;
+      font-size: 14px;
+      letter-spacing: 3px;
+      color: #444;
+    }
+
+    .title {
+      font-family: 'IM Fell English', serif;
+      font-size: 32px;
+      color: #1a1a1a;
+      margin: 10px 0;
+    }
+
+    .subtitle {
+      font-size: 12px;
+      color: #555;
+      letter-spacing: 2px;
+    }
+
+    .deed-info {
+      display: grid;
+      grid-template-columns: 150px 1fr;
+      gap: 10px;
+      margin: 30px 0;
+      font-size: 13px;
+    }
+
+    .deed-label {
+      font-weight: bold;
+      color: #333;
+    }
+
+    .deed-value {
+      border-bottom: 1px solid #999;
+      padding-bottom: 2px;
+    }
+
+    .legal-text {
+      font-size: 12px;
+      line-height: 1.8;
+      text-align: justify;
+      margin: 30px 0;
+      color: #222;
+    }
+
+    .property-sketch {
+      border: 2px solid #333;
+      height: 200px;
+      margin: 30px auto;
+      width: 90%;
+      position: relative;
+      background: #f5f0e0;
+    }
+
+    .sketch-title {
+      position: absolute;
+      top: -12px;
+      left: 20px;
+      background: #d9c9a3;
+      padding: 0 10px;
+      font-size: 11px;
+      font-weight: bold;
+    }
+
+    .sketch-content {
+      padding: 20px;
+      font-size: 10px;
+      color: #333;
+    }
+
+    .lot-drawing {
+      width: 200px;
+      height: 120px;
+      border: 1px solid #666;
+      margin: 10px auto;
+      position: relative;
+      background: #faf5e8;
+    }
+
+    .lot-drawing::before {
+      content: 'LOT 47';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 14px;
+      font-weight: bold;
+    }
+
+    .lot-drawing::after {
+      content: '⌂';
+      position: absolute;
+      top: 30%;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 24px;
+    }
+
+    .dimensions {
+      display: flex;
+      justify-content: space-around;
+      font-size: 10px;
+      color: #444;
+    }
+
+    .seal {
+      position: absolute;
+      bottom: 120px;
+      right: 80px;
+      width: 100px;
+      height: 100px;
+      border: 3px solid rgba(180, 140, 60, 0.7);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      color: rgba(180, 140, 60, 0.8);
+      font-size: 8px;
+      text-align: center;
+      font-weight: bold;
+    }
+
+    .seal-star {
+      font-size: 20px;
+    }
+
+    .signatures {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 50px;
+      padding-top: 30px;
+    }
+
+    .sig-block {
+      text-align: center;
+      width: 180px;
+    }
+
+    .sig-line {
+      border-bottom: 1px solid #333;
+      height: 25px;
+      margin-bottom: 5px;
+    }
+
+    .sig-name {
+      font-size: 10px;
+      color: #444;
+    }
+
+    .filing-stamp {
+      position: absolute;
+      top: 80px;
+      right: 60px;
+      border: 2px solid rgba(0, 100, 0, 0.5);
+      padding: 10px 15px;
+      color: rgba(0, 100, 0, 0.6);
+      font-size: 11px;
+      transform: rotate(12deg);
+      text-align: center;
+    }
+
+    .handwritten-note {
+      position: absolute;
+      bottom: 60px;
+      left: 60px;
+      font-family: 'IM Fell English', serif;
+      font-style: italic;
+      color: #000080;
+      font-size: 12px;
+      transform: rotate(-3deg);
+    }
+  </style>
+</head>
+<body>
+  <div class="water-damage"></div>
+
+  <div class="filing-stamp">
+    FILED<br>
+    MAR 15 1943<br>
+    COUNTY CLERK
+  </div>
+
+  <div class="header">
+    <div class="county">COMMONWEALTH OF PENNSYLVANIA</div>
+    <div class="title">Property Deed</div>
+    <div class="subtitle">MILLBROOK COUNTY RECORDER OF DEEDS</div>
+  </div>
+
+  <div class="deed-info">
+    <div class="deed-label">DEED NUMBER:</div>
+    <div class="deed-value">1943-MC-00847</div>
+
+    <div class="deed-label">PARCEL ID:</div>
+    <div class="deed-value">47-12-0184-000</div>
+
+    <div class="deed-label">PROPERTY ADDRESS:</div>
+    <div class="deed-value">1847 Hartwell Drive, Millbrook, PA 15001</div>
+
+    <div class="deed-label">GRANTOR:</div>
+    <div class="deed-value">FIRST MILLBROOK SAVINGS & LOAN</div>
+
+    <div class="deed-label">GRANTEE:</div>
+    <div class="deed-value">HARTWELL, Robert J. & Mary E.</div>
+
+    <div class="deed-label">CONSIDERATION:</div>
+    <div class="deed-value">$4,200.00 (Four Thousand Two Hundred Dollars)</div>
+
+    <div class="deed-label">DATE OF TRANSFER:</div>
+    <div class="deed-value">March 12, 1943</div>
+  </div>
+
+  <div class="legal-text">
+    KNOW ALL MEN BY THESE PRESENTS, that FIRST MILLBROOK SAVINGS & LOAN ASSOCIATION, a corporation organized under the laws of the Commonwealth of Pennsylvania, for and in consideration of the sum stated above, does hereby grant, bargain, sell and convey unto ROBERT J. HARTWELL and MARY E. HARTWELL, his wife, their heirs and assigns forever, the following described property situate in Millbrook Township, County of Millbrook, Commonwealth of Pennsylvania:
+    <br><br>
+    ALL THAT CERTAIN lot or piece of ground with the buildings and improvements thereon erected, designated as Lot No. 47 on a plan of lots known as "Millbrook Heights," recorded in the Office of the Recorder of Deeds.
+  </div>
+
+  <div class="property-sketch">
+    <div class="sketch-title">PROPERTY SURVEY SKETCH</div>
+    <div class="sketch-content">
+      <div class="lot-drawing"></div>
+      <div class="dimensions">
+        <span>FRONT: 75 ft</span>
+        <span>DEPTH: 150 ft</span>
+        <span>AREA: 0.26 acres</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="seal">
+    <div class="seal-star">★</div>
+    COUNTY OF<br>MILLBROOK<br>PENNSYLVANIA
+  </div>
+
+  <div class="signatures">
+    <div class="sig-block">
+      <div class="sig-line"></div>
+      <div class="sig-name">GRANTOR</div>
+    </div>
+    <div class="sig-block">
+      <div class="sig-line"></div>
+      <div class="sig-name">GRANTEE</div>
+    </div>
+    <div class="sig-block">
+      <div class="sig-line"></div>
+      <div class="sig-name">NOTARY PUBLIC</div>
+    </div>
+  </div>
+
+  <div class="handwritten-note">* See attachment for chain of title - 6 owners since 1943</div>
+</body>
+</html>

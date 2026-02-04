@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      width: 900px;
+      height: 600px;
+      background: #1a1a2e;
+      font-family: 'Share Tech Mono', monospace;
+      padding: 20px;
+      position: relative;
+    }
+
+    .interface {
+      background: #0d0d1a;
+      border: 1px solid #333;
+      border-radius: 5px;
+      height: 100%;
+      padding: 15px;
+    }
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-bottom: 10px;
+      border-bottom: 1px solid #333;
+      margin-bottom: 15px;
+    }
+
+    .file-info {
+      color: #00ff88;
+      font-size: 12px;
+    }
+
+    .controls {
+      display: flex;
+      gap: 15px;
+      color: #666;
+      font-size: 11px;
+    }
+
+    .control-btn {
+      padding: 5px 15px;
+      background: #222;
+      border: 1px solid #444;
+      border-radius: 3px;
+      color: #888;
+    }
+
+    .control-btn.active {
+      background: #003322;
+      border-color: #00ff88;
+      color: #00ff88;
+    }
+
+    .waveform-container {
+      background: #0a0a12;
+      border: 1px solid #333;
+      height: 200px;
+      position: relative;
+      margin-bottom: 15px;
+    }
+
+    .timeline {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 20px;
+      background: #111;
+      border-bottom: 1px solid #333;
+      display: flex;
+      justify-content: space-between;
+      padding: 3px 10px;
+      font-size: 9px;
+      color: #555;
+    }
+
+    .waveform {
+      position: absolute;
+      top: 25px;
+      left: 10px;
+      right: 10px;
+      bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 1px;
+    }
+
+    .wave-bar {
+      width: 3px;
+      background: #00aa66;
+      border-radius: 1px;
+    }
+
+    .wave-bar.anomaly {
+      background: #ff3366;
+      box-shadow: 0 0 10px #ff3366;
+    }
+
+    .playhead {
+      position: absolute;
+      top: 20px;
+      bottom: 0;
+      width: 2px;
+      background: #fff;
+      left: 45%;
+    }
+
+    .anomaly-marker {
+      position: absolute;
+      top: 25px;
+      left: 42%;
+      width: 80px;
+      border: 2px solid #ff3366;
+      border-radius: 3px;
+      height: calc(100% - 35px);
+      background: rgba(255, 51, 102, 0.1);
+    }
+
+    .anomaly-label {
+      position: absolute;
+      top: 5px;
+      left: 42%;
+      color: #ff3366;
+      font-size: 10px;
+      background: #0a0a12;
+      padding: 2px 8px;
+    }
+
+    .spectrum {
+      background: #0a0a12;
+      border: 1px solid #333;
+      height: 100px;
+      margin-bottom: 15px;
+      position: relative;
+      padding: 10px;
+    }
+
+    .spectrum-title {
+      color: #666;
+      font-size: 10px;
+      margin-bottom: 10px;
+    }
+
+    .spectrum-bars {
+      display: flex;
+      align-items: flex-end;
+      height: 70px;
+      gap: 4px;
+    }
+
+    .spec-bar {
+      width: 8px;
+      background: linear-gradient(to top, #00aa66, #00ff88);
+      border-radius: 2px 2px 0 0;
+    }
+
+    .spec-bar.highlight {
+      background: linear-gradient(to top, #ff3366, #ff6699);
+    }
+
+    .data-panel {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 15px;
+    }
+
+    .data-box {
+      background: #111;
+      border: 1px solid #333;
+      padding: 12px;
+      border-radius: 3px;
+    }
+
+    .data-label {
+      color: #666;
+      font-size: 9px;
+      margin-bottom: 5px;
+    }
+
+    .data-value {
+      color: #00ff88;
+      font-size: 14px;
+    }
+
+    .data-value.warning {
+      color: #ff3366;
+    }
+
+    .analysis-notes {
+      grid-column: span 3;
+      background: rgba(255, 51, 102, 0.1);
+      border: 1px solid #ff3366;
+    }
+
+    .analysis-notes .data-label {
+      color: #ff3366;
+    }
+
+    .analysis-notes .data-value {
+      color: #ffccdd;
+      font-size: 11px;
+      line-height: 1.6;
+    }
+  </style>
+</head>
+<body>
+  <div class="interface">
+    <div class="header">
+      <div class="file-info">
+        FILE: blackwood_recording_master.wav | 16-bit/44.1kHz | Duration: 03:42:17
+      </div>
+      <div class="controls">
+        <span class="control-btn">◀◀</span>
+        <span class="control-btn active">▶ PLAY</span>
+        <span class="control-btn">▶▶</span>
+        <span class="control-btn">⟳ LOOP</span>
+      </div>
+    </div>
+
+    <div class="waveform-container">
+      <div class="timeline">
+        <span>00:00</span>
+        <span>00:30</span>
+        <span>01:00</span>
+        <span>01:30</span>
+        <span>02:00</span>
+        <span>02:30</span>
+        <span>03:00</span>
+        <span>03:42</span>
+      </div>
+      <div class="anomaly-marker"></div>
+      <div class="anomaly-label">⚠ ANOMALY 02:47:33</div>
+      <div class="playhead"></div>
+      <div class="waveform">
+        <div class="wave-bar" style="height: 20%"></div>
+        <div class="wave-bar" style="height: 35%"></div>
+        <div class="wave-bar" style="height: 25%"></div>
+        <div class="wave-bar" style="height: 45%"></div>
+        <div class="wave-bar" style="height: 30%"></div>
+        <div class="wave-bar" style="height: 50%"></div>
+        <div class="wave-bar" style="height: 40%"></div>
+        <div class="wave-bar" style="height: 35%"></div>
+        <div class="wave-bar" style="height: 55%"></div>
+        <div class="wave-bar" style="height: 45%"></div>
+        <div class="wave-bar" style="height: 30%"></div>
+        <div class="wave-bar" style="height: 40%"></div>
+        <div class="wave-bar" style="height: 50%"></div>
+        <div class="wave-bar" style="height: 35%"></div>
+        <div class="wave-bar" style="height: 25%"></div>
+        <div class="wave-bar" style="height: 45%"></div>
+        <div class="wave-bar" style="height: 55%"></div>
+        <div class="wave-bar" style="height: 40%"></div>
+        <div class="wave-bar" style="height: 30%"></div>
+        <div class="wave-bar" style="height: 50%"></div>
+        <!-- Anomaly section -->
+        <div class="wave-bar anomaly" style="height: 95%"></div>
+        <div class="wave-bar anomaly" style="height: 100%"></div>
+        <div class="wave-bar anomaly" style="height: 90%"></div>
+        <div class="wave-bar anomaly" style="height: 85%"></div>
+        <div class="wave-bar anomaly" style="height: 95%"></div>
+        <div class="wave-bar anomaly" style="height: 100%"></div>
+        <div class="wave-bar anomaly" style="height: 88%"></div>
+        <div class="wave-bar anomaly" style="height: 92%"></div>
+        <!-- Back to normal -->
+        <div class="wave-bar" style="height: 45%"></div>
+        <div class="wave-bar" style="height: 35%"></div>
+        <div class="wave-bar" style="height: 50%"></div>
+        <div class="wave-bar" style="height: 40%"></div>
+        <div class="wave-bar" style="height: 30%"></div>
+        <div class="wave-bar" style="height: 45%"></div>
+        <div class="wave-bar" style="height: 55%"></div>
+        <div class="wave-bar" style="height: 35%"></div>
+        <div class="wave-bar" style="height: 40%"></div>
+        <div class="wave-bar" style="height: 30%"></div>
+        <div class="wave-bar" style="height: 25%"></div>
+        <div class="wave-bar" style="height: 45%"></div>
+        <div class="wave-bar" style="height: 50%"></div>
+        <div class="wave-bar" style="height: 35%"></div>
+        <div class="wave-bar" style="height: 40%"></div>
+        <div class="wave-bar" style="height: 30%"></div>
+        <div class="wave-bar" style="height: 55%"></div>
+        <div class="wave-bar" style="height: 45%"></div>
+        <div class="wave-bar" style="height: 35%"></div>
+        <div class="wave-bar" style="height: 20%"></div>
+      </div>
+    </div>
+
+    <div class="spectrum">
+      <div class="spectrum-title">FREQUENCY SPECTRUM ANALYSIS (Hz)</div>
+      <div class="spectrum-bars">
+        <div class="spec-bar" style="height: 30%"></div>
+        <div class="spec-bar" style="height: 45%"></div>
+        <div class="spec-bar" style="height: 60%"></div>
+        <div class="spec-bar" style="height: 50%"></div>
+        <div class="spec-bar" style="height: 70%"></div>
+        <div class="spec-bar" style="height: 55%"></div>
+        <div class="spec-bar" style="height: 40%"></div>
+        <div class="spec-bar" style="height: 65%"></div>
+        <div class="spec-bar highlight" style="height: 100%"></div>
+        <div class="spec-bar highlight" style="height: 95%"></div>
+        <div class="spec-bar highlight" style="height: 85%"></div>
+        <div class="spec-bar" style="height: 50%"></div>
+        <div class="spec-bar" style="height: 35%"></div>
+        <div class="spec-bar" style="height: 25%"></div>
+        <div class="spec-bar" style="height: 20%"></div>
+        <div class="spec-bar" style="height: 15%"></div>
+      </div>
+    </div>
+
+    <div class="data-panel">
+      <div class="data-box">
+        <div class="data-label">TIMESTAMP</div>
+        <div class="data-value">02:47:33.847</div>
+      </div>
+      <div class="data-box">
+        <div class="data-label">PEAK FREQUENCY</div>
+        <div class="data-value warning">18.7 Hz (INFRASOUND)</div>
+      </div>
+      <div class="data-box">
+        <div class="data-label">VOICE DETECTED</div>
+        <div class="data-value warning">UNKNOWN SOURCE</div>
+      </div>
+      <div class="data-box analysis-notes">
+        <div class="data-label">⚠ ANALYSIS NOTES</div>
+        <div class="data-value">
+          Secondary voice pattern detected at 02:47:33. Voice does not match any team member.
+          Frequency analysis shows impossible harmonic structure. Words appear to repeat: "COME BACK TO US"
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&family=Courier+Prime&display=swap');
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      width: 800px;
+      height: 1000px;
+      background: #2a2520;
+      padding: 30px;
+      position: relative;
+    }
+
+    .notebook {
+      background: linear-gradient(90deg, #1a1a1a 0%, #1a1a1a 3%, #2d2d2d 3%, #2d2d2d 100%);
+      width: 100%;
+      height: 100%;
+      padding: 40px;
+      padding-left: 80px;
+      position: relative;
+      box-shadow: 5px 5px 20px rgba(0,0,0,0.5);
+    }
+
+    /* Spiral binding */
+    .spiral {
+      position: absolute;
+      left: 35px;
+      top: 20px;
+      bottom: 20px;
+      width: 20px;
+    }
+
+    .ring {
+      width: 20px;
+      height: 20px;
+      border: 3px solid #666;
+      border-radius: 50%;
+      margin-bottom: 25px;
+      background: #333;
+    }
+
+    /* Red margin line */
+    .margin-line {
+      position: absolute;
+      left: 70px;
+      top: 0;
+      bottom: 0;
+      border-left: 2px solid rgba(255, 100, 100, 0.4);
+    }
+
+    .page-content {
+      font-family: 'Caveat', cursive;
+      color: #e0e0e0;
+      font-size: 20px;
+      line-height: 1.8;
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 30px;
+      padding-bottom: 15px;
+      border-bottom: 1px solid #444;
+    }
+
+    .title {
+      font-size: 28px;
+      font-weight: 700;
+      color: #ff6666;
+      letter-spacing: 2px;
+    }
+
+    .date {
+      font-size: 16px;
+      color: #888;
+      margin-top: 5px;
+    }
+
+    .entry {
+      margin-bottom: 25px;
+      position: relative;
+    }
+
+    .entry-time {
+      font-size: 14px;
+      color: #666;
+      margin-bottom: 5px;
+      font-family: 'Courier Prime', monospace;
+    }
+
+    .text-line {
+      margin-bottom: 8px;
+    }
+
+    .highlight {
+      background: rgba(255, 255, 0, 0.2);
+      padding: 0 4px;
+    }
+
+    .underline {
+      text-decoration: underline;
+      text-decoration-color: #ff6666;
+    }
+
+    .circled {
+      border: 2px solid #ff6666;
+      border-radius: 50%;
+      padding: 2px 8px;
+      display: inline-block;
+    }
+
+    .crossed-out {
+      text-decoration: line-through;
+      color: #666;
+    }
+
+    .margin-note {
+      position: absolute;
+      right: -20px;
+      font-size: 14px;
+      color: #ff6666;
+      transform: rotate(5deg);
+    }
+
+    .arrow {
+      color: #ff6666;
+      font-size: 24px;
+    }
+
+    .diagram-box {
+      border: 1px solid #555;
+      padding: 15px;
+      margin: 20px 0;
+      background: rgba(0,0,0,0.3);
+    }
+
+    .diagram-title {
+      font-size: 16px;
+      color: #888;
+      margin-bottom: 10px;
+      text-align: center;
+      font-family: 'Courier Prime', monospace;
+    }
+
+    .cycle-diagram {
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      padding: 10px;
+    }
+
+    .year-box {
+      border: 2px solid #ff6666;
+      padding: 10px 15px;
+      font-family: 'Courier Prime', monospace;
+      font-size: 18px;
+      color: #ff6666;
+    }
+
+    .connector {
+      font-size: 24px;
+      color: #666;
+    }
+
+    .equation {
+      font-family: 'Courier Prime', monospace;
+      font-size: 16px;
+      color: #aaa;
+      text-align: center;
+      margin: 10px 0;
+    }
+
+    .warning-box {
+      border: 2px solid #ff0000;
+      background: rgba(255, 0, 0, 0.1);
+      padding: 15px;
+      margin: 20px 0;
+      text-align: center;
+    }
+
+    .warning-text {
+      color: #ff6666;
+      font-size: 24px;
+      font-weight: 700;
+    }
+
+    .coffee-stain {
+      position: absolute;
+      bottom: 80px;
+      right: 60px;
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      border: 8px solid rgba(101, 67, 33, 0.3);
+      background: transparent;
+    }
+
+    .page-number {
+      position: absolute;
+      bottom: 20px;
+      right: 40px;
+      font-family: 'Courier Prime', monospace;
+      font-size: 14px;
+      color: #555;
+    }
+
+    .obsessive-note {
+      font-size: 14px;
+      color: #ff6666;
+      position: absolute;
+      transform: rotate(-10deg);
+    }
+
+    .note1 { top: 120px; right: 30px; }
+    .note2 { top: 350px; right: 20px; }
+    .note3 { bottom: 200px; right: 40px; }
+  </style>
+</head>
+<body>
+  <div class="notebook">
+    <div class="spiral">
+      <div class="ring"></div>
+      <div class="ring"></div>
+      <div class="ring"></div>
+      <div class="ring"></div>
+      <div class="ring"></div>
+      <div class="ring"></div>
+      <div class="ring"></div>
+      <div class="ring"></div>
+      <div class="ring"></div>
+      <div class="ring"></div>
+      <div class="ring"></div>
+      <div class="ring"></div>
+      <div class="ring"></div>
+      <div class="ring"></div>
+      <div class="ring"></div>
+      <div class="ring"></div>
+      <div class="ring"></div>
+      <div class="ring"></div>
+      <div class="ring"></div>
+      <div class="ring"></div>
+    </div>
+    <div class="margin-line"></div>
+
+    <div class="obsessive-note note1">WHY??</div>
+    <div class="obsessive-note note2">CHECK AGAIN!</div>
+    <div class="obsessive-note note3">IT'S REAL</div>
+
+    <div class="page-content">
+      <div class="header">
+        <div class="title">PATTERN ANALYSIS - MILLBROOK</div>
+        <div class="date">R. Carver | Research Notes | October 2023</div>
+      </div>
+
+      <div class="entry">
+        <div class="entry-time">// INITIAL OBSERVATIONS</div>
+        <div class="text-line">Three separate incidents. <span class="underline">Three victims each time</span>.</div>
+        <div class="text-line">Same location - the woods north of Hartwell Road.</div>
+        <div class="text-line">Same outcome - <span class="highlight">complete disappearance, no trace</span>.</div>
+      </div>
+
+      <div class="diagram-box">
+        <div class="diagram-title">TEMPORAL PATTERN</div>
+        <div class="cycle-diagram">
+          <div class="year-box">1923</div>
+          <div class="connector">→ 50 yrs →</div>
+          <div class="year-box">1973</div>
+          <div class="connector">→ 50 yrs →</div>
+          <div class="year-box">2023</div>
+        </div>
+        <div class="equation">1923 + 50 = 1973 | 1973 + 50 = 2023 | 2023 + 50 = <span class="circled">2073</span></div>
+      </div>
+
+      <div class="entry">
+        <div class="entry-time">// THE THRESHOLD SOCIETY</div>
+        <div class="text-line"><span class="crossed-out">Local legend</span> <span class="arrow">→</span> CONFIRMED REAL</div>
+        <div class="text-line">Founded 1823 - exactly 100 years before first recorded incident</div>
+        <div class="text-line">Charter mentions "rituals of containment" every <span class="circled">50 years</span></div>
+        <div class="text-line">Society disbanded after 1923 incident - <span class="underline">ritual failed?</span></div>
+      </div>
+
+      <div class="entry">
+        <div class="entry-time">// WITNESS ACCOUNTS (ALL THREE INCIDENTS)</div>
+        <div class="text-line">• "Unearthly sounds" - humming, voices</div>
+        <div class="text-line">• Temperature drops near the woods</div>
+        <div class="text-line">• Lights in the forest (described as "wrong" colors)</div>
+        <div class="text-line">• Animals refuse to enter the area</div>
+      </div>
+
+      <div class="warning-box">
+        <div class="warning-text">THE PATTERN IS ACCELERATING</div>
+        <div class="text-line" style="color: #ff6666; font-size: 18px;">If ritual containment failed - what was released?</div>
+      </div>
+
+      <div class="entry">
+        <div class="entry-time">// NEXT STEPS</div>
+        <div class="text-line">1. Locate descendants of Threshold Society members</div>
+        <div class="text-line">2. Find the "Black Ledger" mentioned in charter</div>
+        <div class="text-line">3. Document the woods before Halloween</div>
+        <div class="text-line" style="color: #ff6666;">4. <span class="highlight">DO NOT GO ALONE</span></div>
+      </div>
+    </div>
+
+    <div class="coffee-stain"></div>
+    <div class="page-number">Page 47 of 89</div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Courier+Prime&display=swap');
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      width: 800px;
+      height: 1050px;
+      background: #f5f5f0;
+      font-family: 'Courier Prime', 'Courier New', monospace;
+      padding: 60px;
+      position: relative;
+    }
+
+    body::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background:
+        radial-gradient(ellipse at 80% 20%, rgba(0,0,0,0.03) 0%, transparent 50%),
+        radial-gradient(ellipse at 20% 80%, rgba(0,0,0,0.02) 0%, transparent 40%);
+      pointer-events: none;
+    }
+
+    .classification-top {
+      text-align: center;
+      color: #cc0000;
+      font-size: 16px;
+      font-weight: bold;
+      letter-spacing: 3px;
+      margin-bottom: 5px;
+      border-top: 3px solid #cc0000;
+      border-bottom: 3px solid #cc0000;
+      padding: 8px 0;
+    }
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin: 30px 0;
+      padding-bottom: 20px;
+      border-bottom: 1px solid #333;
+    }
+
+    .agency-seal {
+      width: 80px;
+      height: 80px;
+      border: 3px solid #1a1a4e;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      font-size: 8px;
+      color: #1a1a4e;
+      text-align: center;
+      font-weight: bold;
+    }
+
+    .seal-eagle {
+      font-size: 24px;
+    }
+
+    .memo-info {
+      flex: 1;
+      margin-left: 30px;
+    }
+
+    .agency-name {
+      font-size: 14px;
+      font-weight: bold;
+      letter-spacing: 2px;
+      color: #1a1a4e;
+      margin-bottom: 15px;
+    }
+
+    .memo-details {
+      font-size: 12px;
+      line-height: 2;
+    }
+
+    .memo-row {
+      display: flex;
+    }
+
+    .memo-label {
+      width: 120px;
+      font-weight: bold;
+    }
+
+    .memo-value {
+      flex: 1;
+    }
+
+    .redacted {
+      background: #000;
+      color: #000;
+      padding: 0 8px;
+      margin: 0 2px;
+    }
+
+    .redacted-line {
+      display: block;
+      background: #000;
+      height: 14px;
+      margin: 8px 0;
+    }
+
+    .subject-line {
+      font-size: 14px;
+      font-weight: bold;
+      margin: 25px 0;
+      padding: 10px 0;
+      border-top: 1px solid #666;
+      border-bottom: 1px solid #666;
+    }
+
+    .body-text {
+      font-size: 12px;
+      line-height: 1.9;
+      text-align: justify;
+      margin: 20px 0;
+    }
+
+    .paragraph {
+      margin-bottom: 20px;
+    }
+
+    .highlight-box {
+      border: 2px solid #cc0000;
+      padding: 15px;
+      margin: 20px 0;
+      background: rgba(204, 0, 0, 0.05);
+    }
+
+    .highlight-title {
+      color: #cc0000;
+      font-weight: bold;
+      font-size: 11px;
+      margin-bottom: 10px;
+      letter-spacing: 1px;
+    }
+
+    .declassified-stamp {
+      position: absolute;
+      top: 150px;
+      right: 80px;
+      border: 4px solid rgba(0, 100, 0, 0.6);
+      padding: 10px 20px;
+      color: rgba(0, 100, 0, 0.7);
+      font-size: 18px;
+      font-weight: bold;
+      transform: rotate(-20deg);
+      letter-spacing: 2px;
+    }
+
+    .partial-stamp {
+      position: absolute;
+      top: 200px;
+      right: 60px;
+      color: rgba(200, 0, 0, 0.4);
+      font-size: 12px;
+      transform: rotate(-20deg);
+    }
+
+    .footer {
+      position: absolute;
+      bottom: 80px;
+      left: 60px;
+      right: 60px;
+      border-top: 1px solid #333;
+      padding-top: 15px;
+      font-size: 10px;
+      color: #666;
+    }
+
+    .page-number {
+      text-align: center;
+      margin-top: 10px;
+    }
+
+    .classification-bottom {
+      position: absolute;
+      bottom: 30px;
+      left: 0;
+      right: 0;
+      text-align: center;
+      color: #cc0000;
+      font-size: 14px;
+      font-weight: bold;
+      letter-spacing: 3px;
+    }
+
+    .handwritten {
+      font-family: 'Courier Prime', cursive;
+      color: #000080;
+      font-size: 11px;
+    }
+
+    .margin-note {
+      position: absolute;
+      right: 20px;
+      top: 400px;
+      transform: rotate(90deg);
+      font-size: 10px;
+      color: #000080;
+    }
+  </style>
+</head>
+<body>
+  <div class="classification-top">TOP SECRET // ORCON // NOFORN</div>
+
+  <div class="declassified-stamp">DECLASSIFIED</div>
+  <div class="partial-stamp">PARTIAL RELEASE<br>FOIA 2019-0847</div>
+
+  <div class="header">
+    <div class="agency-seal">
+      <div class="seal-eagle">🦅</div>
+      CENTRAL<br>INTELLIGENCE<br>AGENCY
+    </div>
+    <div class="memo-info">
+      <div class="agency-name">CENTRAL INTELLIGENCE AGENCY</div>
+      <div class="memo-details">
+        <div class="memo-row">
+          <span class="memo-label">MEMORANDUM FOR:</span>
+          <span class="memo-value">Director, <span class="redacted">REDACTED</span></span>
+        </div>
+        <div class="memo-row">
+          <span class="memo-label">FROM:</span>
+          <span class="memo-value"><span class="redacted">REDACTED</span>, Deputy Director Operations</span>
+        </div>
+        <div class="memo-row">
+          <span class="memo-label">DATE:</span>
+          <span class="memo-value">14 November 1978</span>
+        </div>
+        <div class="memo-row">
+          <span class="memo-label">CLASSIFICATION:</span>
+          <span class="memo-value">TOP SECRET // ORCON // NOFORN</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="subject-line">
+    SUBJECT: PROJECT THRESHOLD - Acoustic Anomaly Research Program (Phase III Summary)
+  </div>
+
+  <div class="body-text">
+    <div class="paragraph">
+      1. PURPOSE: This memorandum summarizes findings from Phase III of PROJECT THRESHOLD, conducted at <span class="redacted">REDACTED</span> facility between March and October 1978. Research focused on documented acoustic phenomena at designated Site BLACKWOOD.
+    </div>
+
+    <div class="paragraph">
+      2. BACKGROUND: Following incidents reported at Blackwood Sanitarium (decommissioned 1952), Agency assets identified recurring <span class="redacted">REDACTED</span> at specific coordinates. Initial investigation revealed acoustic signatures inconsistent with known natural or man-made sources.
+    </div>
+
+    <div class="redacted-line" style="width: 100%;"></div>
+    <div class="redacted-line" style="width: 85%;"></div>
+    <div class="redacted-line" style="width: 92%;"></div>
+
+    <div class="paragraph">
+      3. KEY FINDINGS:
+      <br><br>
+      a) Acoustic phenomena occur at predictable intervals, correlating with <span class="redacted">REDACTED</span>
+      <br><br>
+      b) Recorded frequencies fall outside normal human hearing range but produce measurable physiological responses in test subjects, including <span class="redacted">REDACTED</span> and documented cases of <span class="redacted">REDACTED</span>
+      <br><br>
+      c) Geographic analysis confirms Site BLACKWOOD as convergence point for <span class="redacted">REDACTED</span>
+    </div>
+
+    <div class="highlight-box">
+      <div class="highlight-title">⚠ ASSESSMENT:</div>
+      Phenomena at Site BLACKWOOD remain unexplained by current scientific understanding.
+      Recommend continued monitoring and <span class="redacted">REDACTED</span>.
+      All personnel exposure to be limited per Protocol 7-Alpha.
+    </div>
+
+    <div class="paragraph">
+      4. RECOMMENDATION: Project status elevated to <span class="redacted">REDACTED</span>. Request additional funding allocation of $<span class="redacted">REDACTED</span> for FY1979.
+    </div>
+  </div>
+
+  <div class="margin-note handwritten">See Chen file - 2024</div>
+
+  <div class="footer">
+    <div>Distribution: Eyes Only - <span class="redacted">REDACTED</span> | Copies: 3 of 7</div>
+    <div class="page-number">Page 1 of 4 (Pages 2-4 withheld in full)</div>
+  </div>
+
+  <div class="classification-bottom">TOP SECRET // ORCON // NOFORN</div>
+</body>
+</html>

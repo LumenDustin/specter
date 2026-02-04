@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400&display=swap');
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      width: 800px;
+      height: 1050px;
+      background: #d4cfc4;
+      font-family: 'Courier Prime', 'Courier New', monospace;
+      padding: 40px;
+      position: relative;
+    }
+
+    /* Aged paper effect */
+    body::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background:
+        radial-gradient(ellipse at 90% 90%, rgba(139, 119, 101, 0.2) 0%, transparent 50%),
+        radial-gradient(ellipse at 10% 10%, rgba(101, 67, 33, 0.15) 0%, transparent 40%);
+      pointer-events: none;
+    }
+
+    .document {
+      background: #faf8f2;
+      border: 1px solid #999;
+      padding: 40px;
+      position: relative;
+      min-height: 100%;
+      box-shadow: 3px 3px 10px rgba(0,0,0,0.2);
+    }
+
+    .header {
+      text-align: center;
+      border-bottom: 2px solid #333;
+      padding-bottom: 20px;
+      margin-bottom: 25px;
+    }
+
+    .dept-name {
+      font-size: 18px;
+      font-weight: bold;
+      letter-spacing: 3px;
+    }
+
+    .dept-sub {
+      font-size: 12px;
+      margin-top: 5px;
+      letter-spacing: 1px;
+    }
+
+    .badge-icon {
+      font-size: 40px;
+      margin: 10px 0;
+    }
+
+    .case-title {
+      font-size: 16px;
+      font-weight: bold;
+      margin-top: 15px;
+      letter-spacing: 2px;
+    }
+
+    .info-grid {
+      display: grid;
+      grid-template-columns: 150px 1fr 150px 1fr;
+      gap: 8px 15px;
+      margin-bottom: 25px;
+      font-size: 12px;
+      border: 1px solid #666;
+      padding: 15px;
+      background: rgba(0,0,0,0.02);
+    }
+
+    .info-label {
+      font-weight: bold;
+    }
+
+    .section-header {
+      font-size: 14px;
+      font-weight: bold;
+      border-bottom: 1px solid #333;
+      padding-bottom: 5px;
+      margin: 25px 0 15px 0;
+      letter-spacing: 1px;
+    }
+
+    .body-text {
+      font-size: 12px;
+      line-height: 1.8;
+      text-align: justify;
+    }
+
+    .paragraph {
+      margin-bottom: 15px;
+      text-indent: 30px;
+    }
+
+    .victim-list {
+      margin: 15px 0;
+      padding-left: 30px;
+    }
+
+    .victim-entry {
+      margin-bottom: 10px;
+    }
+
+    .stamp {
+      position: absolute;
+      border: 4px solid;
+      padding: 8px 15px;
+      font-weight: bold;
+      font-size: 16px;
+      letter-spacing: 2px;
+      transform: rotate(-15deg);
+    }
+
+    .unsolved-stamp {
+      top: 100px;
+      right: 60px;
+      border-color: rgba(200, 0, 0, 0.6);
+      color: rgba(200, 0, 0, 0.7);
+    }
+
+    .classified-stamp {
+      top: 160px;
+      right: 80px;
+      border-color: rgba(0, 0, 150, 0.5);
+      color: rgba(0, 0, 150, 0.6);
+      font-size: 12px;
+      transform: rotate(-20deg);
+    }
+
+    .handwritten-note {
+      font-style: italic;
+      color: #000080;
+      font-size: 11px;
+      margin: 10px 0;
+      padding: 10px;
+      border-left: 3px solid #000080;
+      background: rgba(0, 0, 128, 0.05);
+    }
+
+    .signature-block {
+      margin-top: 40px;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .signature {
+      text-align: center;
+    }
+
+    .sig-line {
+      width: 200px;
+      border-bottom: 1px solid #333;
+      margin-bottom: 5px;
+      height: 30px;
+    }
+
+    .sig-title {
+      font-size: 11px;
+    }
+
+    .footer {
+      position: absolute;
+      bottom: 30px;
+      left: 40px;
+      right: 40px;
+      font-size: 10px;
+      color: #666;
+      border-top: 1px solid #999;
+      padding-top: 10px;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .coffee-ring {
+      position: absolute;
+      bottom: 120px;
+      right: 80px;
+      width: 60px;
+      height: 60px;
+      border: 6px solid rgba(101, 67, 33, 0.2);
+      border-radius: 50%;
+      background: transparent;
+    }
+
+    .paper-clip {
+      position: absolute;
+      top: 20px;
+      left: 60px;
+      font-size: 40px;
+      color: #888;
+      transform: rotate(-30deg);
+    }
+
+    .file-number {
+      position: absolute;
+      top: 15px;
+      right: 50px;
+      font-size: 14px;
+      font-weight: bold;
+      color: #cc0000;
+    }
+
+    .highlight {
+      background: rgba(255, 255, 0, 0.3);
+      padding: 0 3px;
+    }
+  </style>
+</head>
+<body>
+  <div class="document">
+    <div class="paper-clip">📎</div>
+    <div class="file-number">CASE #73-1031-MP</div>
+
+    <div class="stamp unsolved-stamp">UNSOLVED</div>
+    <div class="stamp classified-stamp">RESTRICTED ACCESS</div>
+
+    <div class="header">
+      <div class="badge-icon">🛡️</div>
+      <div class="dept-name">MILLBROOK POLICE DEPARTMENT</div>
+      <div class="dept-sub">Commonwealth of Pennsylvania</div>
+      <div class="case-title">OFFICIAL INCIDENT REPORT — MISSING PERSONS</div>
+    </div>
+
+    <div class="info-grid">
+      <span class="info-label">CASE NUMBER:</span>
+      <span>73-1031-MP</span>
+      <span class="info-label">DATE FILED:</span>
+      <span>November 1, 1973</span>
+
+      <span class="info-label">INCIDENT DATE:</span>
+      <span>October 31, 1973</span>
+      <span class="info-label">LOCATION:</span>
+      <span>Millbrook Woods, North Sector</span>
+
+      <span class="info-label">REPORTING OFFICER:</span>
+      <span>Chief Walter Thorn</span>
+      <span class="info-label">BADGE #:</span>
+      <span>MPD-001</span>
+
+      <span class="info-label">STATUS:</span>
+      <span style="color: #cc0000; font-weight: bold;">OPEN - UNSOLVED</span>
+      <span class="info-label">CLASSIFICATION:</span>
+      <span>Multiple Missing Persons</span>
+    </div>
+
+    <div class="section-header">VICTIMS</div>
+    <div class="victim-list">
+      <div class="victim-entry">1. <strong>DAVIES, Robert J.</strong> — Male, Age 42, Local resident, Last seen 7:15 PM</div>
+      <div class="victim-entry">2. <strong>MARSH, Linda K.</strong> — Female, Age 31, Teacher, Last seen 7:30 PM</div>
+      <div class="victim-entry">3. <strong>CRANE, Samuel T.</strong> — Male, Age 25, Student, Last seen 7:45 PM</div>
+    </div>
+
+    <div class="section-header">NARRATIVE</div>
+    <div class="body-text">
+      <p class="paragraph">
+        On the evening of October 31, 1973 (Halloween), three residents of Millbrook were reported missing after failing to return from separate walks near the woods north of Hartwell Road. An extensive search was conducted over the following 72 hours involving MPD personnel, state police, and approximately 200 civilian volunteers.
+      </p>
+
+      <p class="paragraph">
+        <span class="highlight">No physical evidence was recovered.</span> No clothing, personal effects, or signs of struggle were found at or near the suspected location. K-9 units lost all scent trails at the same coordinates (approximately 200 yards into the tree line).
+      </p>
+
+      <p class="paragraph">
+        Multiple witnesses reported unusual phenomena on the night in question, including: unexplained lights in the forest, a persistent low-frequency humming sound, and sudden temperature drops. These accounts remain unverified.
+      </p>
+
+      <div class="handwritten-note">
+        Note: This is the SECOND mass disappearance in these woods. First occurred October 1923 — exactly 50 years prior. Three victims then as well. Same circumstances. Files from 1923 incident are missing from archives. — W.T.
+      </div>
+
+      <p class="paragraph">
+        Investigation is ongoing. All leads have been exhausted. Families have been notified. Case remains open pending new information.
+      </p>
+    </div>
+
+    <div class="section-header">INVESTIGATING OFFICER ASSESSMENT</div>
+    <div class="body-text">
+      <p class="paragraph">
+        After 30 years in law enforcement, I have never encountered a case like this. The complete absence of evidence, combined with the historical precedent, suggests factors beyond conventional explanation. I am requesting that this file be flagged for special handling and that access be restricted to senior personnel only.
+      </p>
+    </div>
+
+    <div class="signature-block">
+      <div class="signature">
+        <div class="sig-line"></div>
+        <div class="sig-title">Chief Walter Thorn<br>Millbrook Police Department</div>
+      </div>
+      <div class="signature">
+        <div class="sig-line"></div>
+        <div class="sig-title">Date</div>
+      </div>
+    </div>
+
+    <div class="coffee-ring"></div>
+
+    <div class="footer">
+      <span>MPD Form 7-B (Rev. 1969)</span>
+      <span>Page 1 of 1</span>
+      <span>CONFIDENTIAL — LAW ENFORCEMENT SENSITIVE</span>
+    </div>
+  </div>
+</body>
+</html>

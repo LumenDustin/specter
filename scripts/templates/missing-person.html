@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@400;700&family=Roboto+Condensed&display=swap');
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      width: 600px;
+      height: 800px;
+      background: #e8e0d0;
+      font-family: 'Roboto Condensed', Arial, sans-serif;
+      padding: 30px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Weathered/torn effect */
+    body::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background:
+        linear-gradient(135deg, transparent 70%, rgba(139, 90, 43, 0.1) 100%),
+        radial-gradient(ellipse at 10% 90%, rgba(0, 0, 0, 0.08) 0%, transparent 40%);
+      pointer-events: none;
+    }
+
+    /* Tape effect at top */
+    .tape {
+      position: absolute;
+      top: -5px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 80px;
+      height: 30px;
+      background: rgba(255, 255, 200, 0.7);
+      box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    }
+
+    .missing-banner {
+      background: #c41e3a;
+      color: white;
+      text-align: center;
+      padding: 15px;
+      font-family: 'Oswald', sans-serif;
+      font-size: 48px;
+      font-weight: 700;
+      letter-spacing: 8px;
+      margin-bottom: 20px;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+    }
+
+    .photo-section {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
+
+    .photo {
+      width: 200px;
+      height: 250px;
+      background: linear-gradient(180deg, #3a3a3a 0%, #5a5a5a 50%, #4a4a4a 100%);
+      border: 5px solid white;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+
+    .photo-silhouette {
+      width: 120px;
+      height: 150px;
+      background: #2a2a2a;
+      border-radius: 60px 60px 0 0;
+      position: relative;
+    }
+
+    .photo-silhouette::before {
+      content: '';
+      position: absolute;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 60px;
+      height: 70px;
+      background: #2a2a2a;
+      border-radius: 50%;
+    }
+
+    .photo-text {
+      position: absolute;
+      bottom: 10px;
+      color: #888;
+      font-size: 10px;
+      text-transform: uppercase;
+    }
+
+    .name {
+      text-align: center;
+      font-family: 'Oswald', sans-serif;
+      font-size: 32px;
+      font-weight: 700;
+      color: #1a1a1a;
+      margin-bottom: 5px;
+    }
+
+    .info-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px 20px;
+      margin: 20px 0;
+      padding: 15px;
+      background: rgba(255,255,255,0.5);
+      border: 1px solid #ccc;
+    }
+
+    .info-item {
+      display: flex;
+      font-size: 14px;
+    }
+
+    .info-label {
+      font-weight: bold;
+      color: #333;
+      min-width: 100px;
+    }
+
+    .info-value {
+      color: #1a1a1a;
+    }
+
+    .last-seen {
+      background: #fff3cd;
+      border: 2px solid #856404;
+      padding: 15px;
+      margin: 15px 0;
+    }
+
+    .last-seen-title {
+      font-weight: bold;
+      color: #856404;
+      font-size: 14px;
+      margin-bottom: 8px;
+    }
+
+    .last-seen-text {
+      font-size: 13px;
+      color: #333;
+      line-height: 1.5;
+    }
+
+    .contact {
+      text-align: center;
+      margin-top: 20px;
+      padding: 15px;
+      background: #1a1a1a;
+      color: white;
+    }
+
+    .contact-title {
+      font-size: 12px;
+      letter-spacing: 2px;
+      margin-bottom: 8px;
+    }
+
+    .contact-number {
+      font-family: 'Oswald', sans-serif;
+      font-size: 28px;
+      font-weight: 700;
+      letter-spacing: 2px;
+    }
+
+    .reward {
+      text-align: center;
+      margin-top: 15px;
+      font-family: 'Oswald', sans-serif;
+      font-size: 18px;
+      color: #c41e3a;
+      font-weight: 700;
+    }
+
+    .date-posted {
+      position: absolute;
+      bottom: 15px;
+      right: 20px;
+      font-size: 10px;
+      color: #666;
+    }
+
+    .faded-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(255, 250, 240, 0.15);
+      pointer-events: none;
+    }
+
+    .tear {
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      width: 40px;
+      height: 40px;
+      background: linear-gradient(135deg, transparent 50%, #b8a88a 50%);
+    }
+  </style>
+</head>
+<body>
+  <div class="tape"></div>
+  <div class="faded-overlay"></div>
+
+  <div class="missing-banner">MISSING</div>
+
+  <div class="photo-section">
+    <div class="photo">
+      <div class="photo-silhouette"></div>
+      <div class="photo-text">Photo Unavailable</div>
+    </div>
+  </div>
+
+  <div class="name">THOMAS EDWARD VANCE</div>
+
+  <div class="info-grid">
+    <div class="info-item">
+      <span class="info-label">AGE:</span>
+      <span class="info-value">47 years old</span>
+    </div>
+    <div class="info-item">
+      <span class="info-label">HEIGHT:</span>
+      <span class="info-value">5'11" (180 cm)</span>
+    </div>
+    <div class="info-item">
+      <span class="info-label">WEIGHT:</span>
+      <span class="info-value">185 lbs (84 kg)</span>
+    </div>
+    <div class="info-item">
+      <span class="info-label">HAIR:</span>
+      <span class="info-value">Brown, graying</span>
+    </div>
+    <div class="info-item">
+      <span class="info-label">EYES:</span>
+      <span class="info-value">Blue</span>
+    </div>
+    <div class="info-item">
+      <span class="info-label">BUILD:</span>
+      <span class="info-value">Medium</span>
+    </div>
+  </div>
+
+  <div class="last-seen">
+    <div class="last-seen-title">LAST SEEN:</div>
+    <div class="last-seen-text">
+      <strong>Date:</strong> September 14, 2013<br>
+      <strong>Location:</strong> 1847 Hartwell Drive, Millbrook, PA<br>
+      <strong>Circumstances:</strong> Mr. Vance was the previous owner of the Hartwell residence.
+      Neighbors reported seeing him enter the property on the evening of September 14th.
+      His vehicle was found parked in the driveway the following morning.
+      <strong>No trace of Mr. Vance has been found.</strong>
+    </div>
+  </div>
+
+  <div class="contact">
+    <div class="contact-title">IF YOU HAVE ANY INFORMATION, PLEASE CONTACT:</div>
+    <div class="contact-number">MILLBROOK PD: (555) 847-2913</div>
+  </div>
+
+  <div class="reward">REWARD FOR INFORMATION LEADING TO SAFE RETURN</div>
+
+  <div class="date-posted">Posted: September 2013 | Case #MPD-2013-0612</div>
+  <div class="tear"></div>
+</body>
+</html>

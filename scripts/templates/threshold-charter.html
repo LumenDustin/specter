@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=UnifrakturMaguntia&family=IM+Fell+English:ital@0;1&family=Cinzel+Decorative&display=swap');
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      width: 750px;
+      height: 950px;
+      background: #c9b896;
+      font-family: 'IM Fell English', Georgia, serif;
+      padding: 40px;
+      position: relative;
+    }
+
+    /* Aged parchment effect */
+    body::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background:
+        radial-gradient(ellipse at 20% 30%, rgba(101, 67, 33, 0.3) 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 70%, rgba(139, 90, 43, 0.25) 0%, transparent 45%),
+        radial-gradient(ellipse at 50% 90%, rgba(80, 50, 20, 0.2) 0%, transparent 40%);
+      pointer-events: none;
+    }
+
+    .parchment {
+      background: linear-gradient(180deg, #e8dcc8 0%, #d9c9a3 50%, #c4b48a 100%);
+      border: none;
+      padding: 40px;
+      position: relative;
+      min-height: 100%;
+    }
+
+    /* Decorative border */
+    .border-decoration {
+      position: absolute;
+      top: 15px; left: 15px; right: 15px; bottom: 15px;
+      border: 3px double #5c4a2a;
+      pointer-events: none;
+    }
+
+    .corner {
+      position: absolute;
+      width: 40px;
+      height: 40px;
+      font-size: 30px;
+      color: #5c4a2a;
+    }
+
+    .corner-tl { top: 5px; left: 5px; }
+    .corner-tr { top: 5px; right: 5px; transform: rotate(90deg); }
+    .corner-bl { bottom: 5px; left: 5px; transform: rotate(-90deg); }
+    .corner-br { bottom: 5px; right: 5px; transform: rotate(180deg); }
+
+    .header {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .symbol {
+      font-size: 60px;
+      color: #3d2914;
+      margin-bottom: 10px;
+    }
+
+    .title {
+      font-family: 'Cinzel Decorative', serif;
+      font-size: 28px;
+      color: #2a1a0a;
+      letter-spacing: 4px;
+      margin-bottom: 5px;
+    }
+
+    .subtitle {
+      font-family: 'UnifrakturMaguntia', serif;
+      font-size: 18px;
+      color: #4a3520;
+      letter-spacing: 2px;
+    }
+
+    .founding-date {
+      font-size: 14px;
+      font-style: italic;
+      color: #5c4a2a;
+      margin-top: 10px;
+    }
+
+    .divider {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 25px 0;
+      color: #5c4a2a;
+    }
+
+    .divider-line {
+      flex: 1;
+      height: 1px;
+      background: #5c4a2a;
+    }
+
+    .divider-symbol {
+      margin: 0 15px;
+      font-size: 16px;
+    }
+
+    .body-text {
+      font-size: 13px;
+      line-height: 1.9;
+      color: #2a1a0a;
+      text-align: justify;
+    }
+
+    .paragraph {
+      margin-bottom: 20px;
+      text-indent: 30px;
+    }
+
+    .paragraph:first-of-type {
+      text-indent: 0;
+    }
+
+    .drop-cap {
+      float: left;
+      font-family: 'UnifrakturMaguntia', serif;
+      font-size: 56px;
+      line-height: 1;
+      margin-right: 8px;
+      color: #3d2914;
+    }
+
+    .article-heading {
+      font-family: 'Cinzel Decorative', serif;
+      font-size: 14px;
+      text-align: center;
+      margin: 25px 0 15px 0;
+      color: #3d2914;
+      letter-spacing: 2px;
+    }
+
+    .oath-text {
+      font-style: italic;
+      text-align: center;
+      margin: 20px 40px;
+      padding: 15px;
+      border-left: 2px solid #5c4a2a;
+      border-right: 2px solid #5c4a2a;
+      color: #3d2914;
+    }
+
+    .signatures {
+      margin-top: 40px;
+      display: flex;
+      justify-content: space-around;
+      flex-wrap: wrap;
+    }
+
+    .signature {
+      text-align: center;
+      margin: 10px;
+      font-style: italic;
+      font-size: 12px;
+    }
+
+    .sig-line {
+      width: 120px;
+      border-bottom: 1px solid #5c4a2a;
+      margin-bottom: 5px;
+      height: 20px;
+    }
+
+    .wax-seal {
+      position: absolute;
+      bottom: 80px;
+      right: 60px;
+      width: 90px;
+      height: 90px;
+      background: radial-gradient(circle at 30% 30%, #8b0000 0%, #5c0000 50%, #3d0000 100%);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 3px 3px 10px rgba(0,0,0,0.4);
+    }
+
+    .seal-inner {
+      width: 70px;
+      height: 70px;
+      border: 2px solid rgba(255,255,255,0.3);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 28px;
+      color: rgba(255,255,255,0.4);
+    }
+
+    .occult-symbols {
+      position: absolute;
+      font-size: 14px;
+      color: rgba(60, 40, 20, 0.3);
+    }
+
+    .sym1 { top: 100px; left: 50px; }
+    .sym2 { top: 200px; right: 50px; }
+    .sym3 { bottom: 200px; left: 40px; }
+
+    .archive-note {
+      position: absolute;
+      bottom: 30px;
+      left: 50px;
+      font-size: 9px;
+      color: #666;
+    }
+  </style>
+</head>
+<body>
+  <div class="parchment">
+    <div class="border-decoration"></div>
+    <div class="corner corner-tl">☙</div>
+    <div class="corner corner-tr">☙</div>
+    <div class="corner corner-bl">☙</div>
+    <div class="corner corner-br">☙</div>
+
+    <div class="occult-symbols sym1">☽ ✧ ☾</div>
+    <div class="occult-symbols sym2">⍟ ✦ ⍟</div>
+    <div class="occult-symbols sym3">◈ ⬡ ◈</div>
+
+    <div class="header">
+      <div class="symbol">⛧</div>
+      <div class="title">THE THRESHOLD SOCIETY</div>
+      <div class="subtitle">Charter of Foundation</div>
+      <div class="founding-date">Established in the Year of Our Lord, 1823</div>
+    </div>
+
+    <div class="divider">
+      <div class="divider-line"></div>
+      <div class="divider-symbol">✦</div>
+      <div class="divider-line"></div>
+    </div>
+
+    <div class="body-text">
+      <p class="paragraph">
+        <span class="drop-cap">W</span>E, the undersigned, being of sound mind and solemn purpose, do hereby establish this Society for the sacred duty of GUARDING THE BOUNDARIES BETWEEN WORLDS. Having witnessed that which cannot be explained by natural philosophy, we bind ourselves to eternal vigilance.
+      </p>
+
+      <p class="paragraph">
+        The land upon which the township of Millbrook now stands has been known to us as a place of THRESHOLD — where the veil between our world and that which lies beyond grows thin. It is our charge to ensure that what sleeps beneath remains undisturbed.
+      </p>
+
+      <div class="article-heading">— ARTICLES OF SACRED DUTY —</div>
+
+      <p class="paragraph">
+        <strong>ARTICLE I.</strong> Members shall maintain vigilance over the designated forest lands, particularly during periods of celestial significance.
+      </p>
+
+      <p class="paragraph">
+        <strong>ARTICLE II.</strong> The rituals of containment, as recorded in the Black Ledger, shall be performed without fail upon each half-century, lest the Boundary weaken.
+      </p>
+
+      <p class="paragraph">
+        <strong>ARTICLE III.</strong> No member shall speak of Society matters to those uninitiated, upon pain of excommunication and that which follows.
+      </p>
+
+      <div class="oath-text">
+        "We stand at the Threshold.<br>
+        We guard the Gate.<br>
+        What was bound shall remain bound.<br>
+        Until the final darkness takes us all."
+      </div>
+    </div>
+
+    <div class="signatures">
+      <div class="signature">
+        <div class="sig-line"></div>
+        Ezekiel Ward, Founder
+      </div>
+      <div class="signature">
+        <div class="sig-line"></div>
+        Josiah Crane, Secretary
+      </div>
+      <div class="signature">
+        <div class="sig-line"></div>
+        Nathaniel Marsh, Keeper
+      </div>
+    </div>
+
+    <div class="wax-seal">
+      <div class="seal-inner">⛧</div>
+    </div>
+  </div>
+
+  <div class="archive-note">Millbrook Historical Society | Restricted Collection | Document #1823-TS-001</div>
+</body>
+</html>
