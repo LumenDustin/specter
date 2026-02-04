@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0a0a0a"/>
+      <stop offset="100%" style="stop-color:#18181b"/>
+    </linearGradient>
+    <linearGradient id="glow" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#dc2626"/>
+      <stop offset="100%" style="stop-color:#991b1b"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="512" height="512" rx="96" fill="url(#bg)"/>
+
+  <!-- Outer ring -->
+  <circle cx="256" cy="256" r="180" fill="none" stroke="#27272a" stroke-width="8"/>
+
+  <!-- Inner glow ring -->
+  <circle cx="256" cy="256" r="140" fill="none" stroke="url(#glow)" stroke-width="4" opacity="0.8"/>
+
+  <!-- Eye shape -->
+  <ellipse cx="256" cy="256" rx="100" ry="60" fill="none" stroke="#dc2626" stroke-width="6"/>
+
+  <!-- Pupil -->
+  <circle cx="256" cy="256" r="30" fill="#dc2626"/>
+
+  <!-- Inner pupil highlight -->
+  <circle cx="246" cy="246" r="8" fill="#fca5a5"/>
+
+  <!-- Scan lines (optional detail) -->
+  <line x1="156" y1="256" x2="120" y2="256" stroke="#dc2626" stroke-width="2" opacity="0.5"/>
+  <line x1="356" y1="256" x2="392" y2="256" stroke="#dc2626" stroke-width="2" opacity="0.5"/>
+
+  <!-- Corner brackets -->
+  <path d="M80 140 L80 80 L140 80" fill="none" stroke="#dc2626" stroke-width="4" stroke-linecap="round"/>
+  <path d="M372 80 L432 80 L432 140" fill="none" stroke="#dc2626" stroke-width="4" stroke-linecap="round"/>
+  <path d="M432 372 L432 432 L372 432" fill="none" stroke="#dc2626" stroke-width="4" stroke-linecap="round"/>
+  <path d="M140 432 L80 432 L80 372" fill="none" stroke="#dc2626" stroke-width="4" stroke-linecap="round"/>
+
+  <!-- S letter stylized -->
+  <text x="256" y="420" font-family="Courier, monospace" font-size="48" font-weight="bold" fill="#dc2626" text-anchor="middle">SPECTER</text>
+</svg>
