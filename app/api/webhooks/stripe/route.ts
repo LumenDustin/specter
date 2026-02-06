@@ -1,4 +1,4 @@
-import { stripe } from '@/lib/stripe'
+import { getStripe } from '@/lib/stripe'
 import { createClient } from '@supabase/supabase-js'
 import { NextResponse } from 'next/server'
 import Stripe from 'stripe'
@@ -23,7 +23,7 @@ export async function POST(request: Request) {
   try {
     // Verify webhook signature if secret is configured
     if (process.env.STRIPE_WEBHOOK_SECRET) {
-      event = stripe.webhooks.constructEvent(
+      event = getStripe().webhooks.constructEvent(
         body,
         signature,
         process.env.STRIPE_WEBHOOK_SECRET
