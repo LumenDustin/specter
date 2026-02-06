@@ -1,7 +1,9 @@
 import Stripe from 'stripe'
 
+// Note: apiVersion should match your Stripe dashboard version
+// Using 'as any' to avoid TypeScript version mismatches
 export const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
-  apiVersion: '2026-01-28.clover',
+  apiVersion: '2025-01-27.acacia' as any,
   typescript: true,
 })
 
