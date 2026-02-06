@@ -1,11 +1,22 @@
 import Stripe from 'stripe'
 
-// Note: apiVersion should match your Stripe dashboard version
-// Using 'as any' to avoid TypeScript version mismatches
-export const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
-  apiVersion: '2025-01-27.acacia' as any,
-  typescript: true,
-})
+// Lazy initialization to ensure env vars are available at runtime
+let stripeInstance: Stripe | null = null
+
+export function getStripe(): Stripe {
+  if (!stripeInstance) {
+    const key = process.env.STRIPE_SECRET_KEY
+    if (!key) {
+      throw new Error('STRIPE_SECRET_KEY is not set in environment')
+    }
+    console.log('Initializing Stripe with key starting with:', key.substring(0, 12) + '...')
+    stripeInstance = new Stripe(key, {
+      apiVersion: '2025-01-27.acacia' as any,
+      typescript: true,
+    })
+  }
+  return stripeInstance
+}
 
 // Case prices in cents
 export const CASE_PRICES: Record<string, number> = {

@@ -1,5 +1,5 @@
 import { createClient } from '@/lib/supabase/server'
-import { stripe, getCasePrice } from '@/lib/stripe'
+import { getStripe, getCasePrice } from '@/lib/stripe'
 import { NextResponse } from 'next/server'
 
 export async function POST(request: Request) {
@@ -54,6 +54,9 @@ export async function POST(request: Request) {
   }
 
   try {
+    // Get Stripe instance
+    const stripe = getStripe()
+
     // Create Stripe Checkout session
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ['card'],
