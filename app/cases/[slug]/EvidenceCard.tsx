@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import { Analytics } from '@/lib/analytics'
+import AudioPlayer from '@/components/AudioPlayer'
 
 interface EvidenceCardProps {
   evidence: {
@@ -10,6 +11,8 @@ interface EvidenceCardProps {
     type: string
     content: string
     image_url: string | null
+    audio_url?: string | null
+    video_url?: string | null
   }
   index: number
   caseSlug: string
@@ -99,6 +102,8 @@ export default function EvidenceCard({
             evidence.type === 'transcript' ? 'bg-purple-900/30 text-purple-400 border border-purple-800' :
             evidence.type === 'report' ? 'bg-amber-900/30 text-amber-400 border border-amber-800' :
             evidence.type === 'image' ? 'bg-green-900/30 text-green-400 border border-green-800' :
+            evidence.type === 'audio' ? 'bg-red-900/30 text-red-400 border border-red-800' :
+            evidence.type === 'video' ? 'bg-pink-900/30 text-pink-400 border border-pink-800' :
             'bg-zinc-800 text-zinc-400'
           }`}>
             {evidence.type}
@@ -107,14 +112,40 @@ export default function EvidenceCard({
       </div>
 
       {/* Evidence Content */}
-      <div className="p-6">
-        {evidence.image_url ? (
+      <div className="p-6 space-y-4">
+        {/* Image */}
+        {evidence.image_url && (
           <img
             src={evidence.image_url}
             alt={evidence.title}
             className="max-w-full rounded border border-zinc-800"
           />
-        ) : (
+        )}
+
+        {/* Audio Player */}
+        {evidence.audio_url && (
+          <AudioPlayer
+            src={evidence.audio_url}
+            title={evidence.title}
+          />
+        )}
+
+        {/* Video Player */}
+        {evidence.video_url && (
+          <div className="relative rounded overflow-hidden border border-zinc-800">
+            <video
+              src={evidence.video_url}
+              controls
+              className="w-full"
+              preload="metadata"
+            >
+              Your browser does not support the video element.
+            </video>
+          </div>
+        )}
+
+        {/* Text Content (show if no media, or as supplementary) */}
+        {evidence.content && !evidence.image_url && !evidence.audio_url && !evidence.video_url && (
           <pre className="whitespace-pre-wrap font-mono text-sm text-zinc-300 bg-zinc-950 p-4 rounded border border-zinc-800 max-h-96 overflow-y-auto">
             {evidence.content}
           </pre>
