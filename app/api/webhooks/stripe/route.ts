@@ -89,17 +89,15 @@ export async function POST(request: Request) {
 
     console.log(`Processing purchase: User ${userId}, Case ${caseId}`)
 
-    // Record the purchase
+    // Record the purchase (using correct column names from schema)
     const { error: purchaseError } = await supabase
       .from('purchases')
       .insert({
         user_id: userId,
         case_id: caseId,
-        stripe_session_id: session.id,
-        stripe_payment_intent: session.payment_intent,
-        amount: session.amount_total,
-        currency: session.currency,
-        status: 'completed',
+        stripe_payment_id: session.payment_intent || session.id,
+        amount_cents: session.amount_total,
+        purchased_at: new Date().toISOString(),
       })
 
     if (purchaseError) {
