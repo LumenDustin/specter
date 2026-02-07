@@ -54,8 +54,16 @@ export async function POST(request: Request) {
   }
 
   try {
+    console.log('DEBUG: Starting Stripe checkout...')
+    console.log('DEBUG: STRIPE_SECRET_KEY exists:', !!process.env.STRIPE_SECRET_KEY)
+    console.log('DEBUG: Key prefix:', process.env.STRIPE_SECRET_KEY?.substring(0, 12))
+
     // Get Stripe instance
     const stripe = getStripe()
+    console.log('DEBUG: Stripe instance created')
+
+    const origin = request.headers.get('origin') || 'https://specter-game.vercel.app'
+    console.log('DEBUG: Origin:', origin)
 
     // Create Stripe Checkout session
     const session = await stripe.checkout.sessions.create({
@@ -74,8 +82,8 @@ export async function POST(request: Request) {
         },
       ],
       mode: 'payment',
-      success_url: `${request.headers.get('origin')}/checkout/success?session_id={CHECKOUT_SESSION_ID}&case=${caseSlug}`,
-      cancel_url: `${request.headers.get('origin')}/checkout/cancel?case=${caseSlug}`,
+      success_url: `${origin}/checkout/success?session_id={CHECKOUT_SESSION_ID}&case=${caseSlug}`,
+      cancel_url: `${origin}/checkout/cancel?case=${caseSlug}`,
       metadata: {
         user_id: user.id,
         case_id: caseData.id,
@@ -84,12 +92,19 @@ export async function POST(request: Request) {
       customer_email: user.email,
     })
 
+    console.log('DEBUG: Session created:', session.id)
     return NextResponse.json({ sessionId: session.id, url: session.url })
   } catch (error: any) {
-    console.error('Stripe checkout error:', error?.message || error)
+    console.error('Stripe checkout error:', error)
+    console.error('Error type:', error?.type)
+    console.error('Error code:', error?.code)
+    console.error('Error message:', error?.message)
+    console.error('Raw error:', error?.raw)
     return NextResponse.json({
       error: 'Failed to create checkout session',
-      details: error?.message || 'Unknown error'
+      details: error?.message || 'Unknown error',
+      type: error?.type || 'unknown',
+      code: error?.code || 'unknown'
     }, { status: 500 })
   }
 }
