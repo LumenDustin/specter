@@ -1,5 +1,5 @@
 import { createClient } from '@/lib/supabase/server'
-import { getStripe, getCasePrice } from '@/lib/stripe'
+import { getCasePrice } from '@/lib/stripe'
 import { NextResponse } from 'next/server'
 
 export async function POST(request: Request) {
@@ -54,57 +54,54 @@ export async function POST(request: Request) {
   }
 
   try {
-    console.log('DEBUG: Starting Stripe checkout...')
-    console.log('DEBUG: STRIPE_SECRET_KEY exists:', !!process.env.STRIPE_SECRET_KEY)
-    console.log('DEBUG: Key prefix:', process.env.STRIPE_SECRET_KEY?.substring(0, 12))
-
-    // Get Stripe instance
-    const stripe = getStripe()
-    console.log('DEBUG: Stripe instance created')
-
     const origin = request.headers.get('origin') || 'https://specter-game.vercel.app'
-    console.log('DEBUG: Origin:', origin)
+    const stripeKey = process.env.STRIPE_SECRET_KEY
 
-    // Create Stripe Checkout session
-    const session = await stripe.checkout.sessions.create({
-      payment_method_types: ['card'],
-      line_items: [
-        {
-          price_data: {
-            currency: 'usd',
-            product_data: {
-              name: `SPECTER Case: ${caseData.title}`,
-              description: `Access to Case File #${caseSlug.toUpperCase()}`,
-            },
-            unit_amount: priceInCents,
-          },
-          quantity: 1,
-        },
-      ],
-      mode: 'payment',
-      success_url: `${origin}/checkout/success?session_id={CHECKOUT_SESSION_ID}&case=${caseSlug}`,
-      cancel_url: `${origin}/checkout/cancel?case=${caseSlug}`,
-      metadata: {
-        user_id: user.id,
-        case_id: caseData.id,
-        case_slug: caseSlug,
+    if (!stripeKey) {
+      return NextResponse.json({ error: 'Stripe not configured' }, { status: 500 })
+    }
+
+    // Use direct fetch instead of SDK to bypass potential SDK issues
+    const response = await fetch('https://api.stripe.com/v1/checkout/sessions', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${stripeKey}`,
+        'Content-Type': 'application/x-www-form-urlencoded',
       },
-      customer_email: user.email,
+      body: new URLSearchParams({
+        'payment_method_types[0]': 'card',
+        'line_items[0][price_data][currency]': 'usd',
+        'line_items[0][price_data][product_data][name]': `SPECTER Case: ${caseData.title}`,
+        'line_items[0][price_data][product_data][description]': `Access to Case File #${caseSlug.toUpperCase()}`,
+        'line_items[0][price_data][unit_amount]': priceInCents.toString(),
+        'line_items[0][quantity]': '1',
+        'mode': 'payment',
+        'success_url': `${origin}/checkout/success?session_id={CHECKOUT_SESSION_ID}&case=${caseSlug}`,
+        'cancel_url': `${origin}/checkout/cancel?case=${caseSlug}`,
+        'metadata[user_id]': user.id,
+        'metadata[case_id]': caseData.id,
+        'metadata[case_slug]': caseSlug,
+        'customer_email': user.email || '',
+      }),
     })
 
-    console.log('DEBUG: Session created:', session.id)
+    const session = await response.json()
+
+    if (!response.ok) {
+      console.error('Stripe API error:', session)
+      return NextResponse.json({
+        error: 'Stripe API error',
+        details: session.error?.message || 'Unknown error',
+        type: session.error?.type || 'unknown',
+      }, { status: 500 })
+    }
+
     return NextResponse.json({ sessionId: session.id, url: session.url })
   } catch (error: any) {
-    console.error('Stripe checkout error:', error)
-    console.error('Error type:', error?.type)
-    console.error('Error code:', error?.code)
-    console.error('Error message:', error?.message)
-    console.error('Raw error:', error?.raw)
+    console.error('Checkout error:', error)
     return NextResponse.json({
       error: 'Failed to create checkout session',
       details: error?.message || 'Unknown error',
-      type: error?.type || 'unknown',
-      code: error?.code || 'unknown'
     }, { status: 500 })
   }
 }
