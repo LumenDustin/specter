@@ -10,10 +10,7 @@ export function getStripe(): Stripe {
       throw new Error('STRIPE_SECRET_KEY is not set in environment')
     }
     console.log('Initializing Stripe with key starting with:', key.substring(0, 12) + '...')
-    stripeInstance = new Stripe(key, {
-      apiVersion: '2025-01-27.acacia' as any,
-      typescript: true,
-    })
+    stripeInstance = new Stripe(key)
   }
   return stripeInstance
 }
